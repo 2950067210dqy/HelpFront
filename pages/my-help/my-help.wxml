@@ -1,0 +1,130 @@
+<!--pages/my-issue/my-issue.wxml-->
+<ui-sys footer="{{false}}" bg="bg-yellow-thin ">
+  <i-collapse i-class="bg-blue-gradient radius mb-5"  name="name1" >
+        <block wx:for="{{tableDatas}}"  wx:for-index="index0" >
+          <i-collapse-item
+         
+                name="{{tableDatas[index0].adcode}}"
+                title="{{tableDatas[index0].province}}-{{tableDatas[index0].city}}-{{tableDatas[index0].district}}    共{{tableDatas[index0].length}}个"
+                i-class-title="collapse-item-title radius mb-5"
+                i-class-content="collapse-item-content">
+            <view slot="content" class="pb-5">
+                    <view class=" m-2" wx:for="{{tableDatas[index0].datas}}" wx:for-index="index">
+                        <ui-row  col="12" ui="mt-2" spacing="20">
+                            <ui-col  span="12">
+                              <view class=" bg-white  w-100  shadow radius" style="height:auto;">
+
+                                <i-card full i-class="radius " title="[{{tableDatas[index0].datas[index].title}}]"  thumb="{{serverPath+tableDatas[index0].datas[index].user.headimg}}">
+                                    <view slot="num" class="text-gray">#{{index+1}}</view>
+                                    <view slot="image" class="inline-block" >
+                                      <ui-avatar src="{{tableDatas[index0].datas[index].user&&tableDatas[index0].datas[index].user.headimg!=''?serverPath+tableDatas[index0].datas[index].user.headimg:''}}" bindtap="navToMeDetail" ui="round xl  bg-{{tableDatas[index0].datas[index].user.sex=='男'?'blue':'pink'}}">
+                                        <text>{{tableDatas[index0].datas[index].user.name}}</text>
+                                        <ui-tag badge="bl" ui="shadow-yellow borders  borders-yellow" bg="bg-white" isSlot class="opacity">
+                                            <text class="cicon-{{tableDatas[index0].datas[index].user.sex=='男'?'':'fe'}}male text-{{tableDatas[index0].datas[index].user.sex=='男'?'blue':'pink'}}"/>
+                                            <text class="text-yellow text-bolder  shadow-white" >{{tableDatas[index0].datas[index].user.role==1?'志愿者':''}}</text>
+                                        </ui-tag>
+                                      </ui-avatar>
+                                    </view>
+                                    <view slot="top-info" class="inline-block ml-3">
+                                      <text >  {{tableDatas[index0].datas[index].user.name}}</text>
+                                      <text class="text-10 text-red">
+                                        [正在帮助]
+                                      </text> 
+                                    </view>
+                                    <view slot="extra" >
+                                      <text class="mr-3"> 🔒{{tableDatas[index0].datas[index].emergency.message}}</text>
+                                    </view>
+                                    <view slot="content">
+                                      <view>
+                                        {{tableDatas[index0].datas[index].message}}
+                                      </view>
+                                      <block wx:if="{{tableDatas[index0].datas[index].images!=''}}" wx:for="{{tableDatas[index0].datas[index].images}}" wx:for-index="index2">
+                                      <image class="m-1 radius" data-idChild="{{index2}}" data-idFather="{{index}}" data-idGrandFather="{{index0}}"  src="{{serverPath+tableDatas[index0].datas[index].images[index2]}}" bindtap="magnifyImage" style="width: 130rpx;height: 130rpx;position: relative; padding-right: 20rpx;"> 
+                                      </image>
+                                    </block>
+                                    <view class="my-3">
+                                      <text class="cicon-mobile-o text-black">:{{tableDatas[index0].datas[index].user.phone}}</text>
+                                    </view>
+                                    <view class="my-4">
+                                      <text class="cicon-location-on text-black">:{{tableDatas[index0].datas[index].address}}{{tableDatas[index0].datas[index].detailLocation}}</text>
+                                    </view>
+
+                                    <view wx:if="{{loginUser!=null&&tableDatas[index0].datas[index].state.id==1}}">
+                                      <button class="bg-{{tableDatas[index0].datas[index].state.id==2?'orange':'pink'}}" 
+                                      disabled="{{!(loginUser!=null&&tableDatas[index0].datas[index].state.id==1)}}" data-userid="{{tableDatas[index0].datas[index].user.id}}"  data-id="{{tableDatas[index0].datas[index].id}}" data-index="{{index}}"  data-index0="{{index0}}" data-index="{{index}}"  bindtap="helpThis">{{tableDatas[index0].datas[index].helpUser!=null?'正在被':''}}帮助</button>
+                                    </view>
+
+                                    <view class="bg-grey text-center  p-3" wx:elif="{{tableDatas[index0].datas[index].helpUser!=null&&tableDatas[index0].datas[index].state.id==2}}">
+                                      <ui-avatar  src="{{tableDatas[index0].datas[index].helpUser&&tableDatas[index0].datas[index].helpUser.headimg!=''?serverPath+tableDatas[index0].datas[index].helpUser.headimg:''}}" bindtap="navToMeDetail" ui="round df  bg-{{tableDatas[index0].datas[index].helpUser.sex=='男'?'blue':'pink'}}">
+                                        <text>{{tableDatas[index0].datas[index].helpUser.name}}</text>
+                                        <ui-tag badge="bl" ui="" bg="bg-grey" isSlot class="opacity ">
+                                            <text class="text-bold  cicon-{{tableDatas[index0].datas[index].helpUser.sex=='男'?'':'fe'}}male text-{{tableDatas[index0].datas[index].helpUserr.sex=='男'?'blue':'pink'}}"/>
+                      
+                                        </ui-tag>
+                                      </ui-avatar>
+                                      <text class="text-10">  {{tableDatas[index0].datas[index].helpUser.name}}       志愿者已经接取发布，正在马不停蹄的完成中....</text>
+                                      <text class="cicon-mobile-o text-white">:{{tableDatas[index0].datas[index].helpUser.phone}}</text>
+                                    </view>
+
+                                    <view class="bg-grey text-center  p-3" wx:elif="{{loginUser!=null&&tableDatas[index0].datas[index].state.id==3&&tableDatas[index0].datas[index].helpUser!=null}}">
+                                      <ui-avatar  src="{{tableDatas[index0].datas[index].helpUser&&tableDatas[index0].datas[index].helpUser.headimg!=''?serverPath+tableDatas[index0].datas[index].helpUser.headimg:''}}" bindtap="navToMeDetail" ui="round df  bg-{{tableDatas[index0].datas[index].helpUser.sex=='男'?'blue':'pink'}}">
+                                        <text>{{tableDatas[index0].datas[index].helpUser.name}}</text>
+                                        <ui-tag badge="bl" ui="" bg="bg-grey" isSlot class="opacity ">
+                                            <text class="text-bold  cicon-{{tableDatas[index0].datas[index].helpUser.sex=='男'?'':'fe'}}male text-{{tableDatas[index0].datas[index].helpUserr.sex=='男'?'blue':'pink'}}"/>
+                                        </ui-tag>
+                                      </ui-avatar>
+                                      <text class="text-10">  {{tableDatas[index0].datas[index].helpUser.name}}       志愿者已经完成发布</text>
+                                      <text class="cicon-mobile-o text-white">:{{tableDatas[index0].datas[index].helpUser.phone}}</text>
+                                    </view>
+
+                                    <view wx:elif="{{loginUser!=null&&tableDatas[index0].datas[index].state.id==4&&tableDatas[index0].datas[index].helpUser!=null}}">
+                                      <button class="bg-grey-light" disabled="true" data-userid="{{tableDatas[index0].datas[index].user.id}}"  data-id="{{tableDatas[index0].datas[index].id}}" data-index="{{index}}" >已取消</button>
+                                    </view>
+
+
+                                    <view wx:if="{{loginUser!=null&&(tableDatas[index0].datas[index].state.id==2)}}">
+                                      <button class="bg-{{tableDatas[index0].datas[index].state.id==4?'cyane':'blue'}} mt-3" disabled="{{tableDatas[index0].datas[index].state.id==4}}" data-userid="{{tableDatas[index0].datas[index].user.id}}"  data-id="{{tableDatas[index0].datas[index].id}}" data-index="{{index}}"  data-index0="{{index0}}" bindtap="cancelThisByHelper">取消帮助</button>
+                                    </view>
+
+                                    <view wx:if="{{loginUser!=null&&(tableDatas[index0].datas[index].state.id==2)}}">
+                                      <button class="bg-{{tableDatas[index0].datas[index].state.id==3?'olive':'green'}} mt-3" disabled="{{tableDatas[index0].datas[index].state.id==4}}" data-userid="{{tableDatas[index0].datas[index].user.id}}"  data-id="{{tableDatas[index0].datas[index].id}}" data-index="{{index}}"  data-index0="{{index0}}" bindtap="finishThisByHelper">完成帮助</button>
+                                    </view>
+                                    
+                                    <view wx:if="{{loginUser!=null}}">
+                                      <button class="bg-purple mt-3" data-userid="{{tableDatas[index0].datas[index].user.id}}"  data-id="{{tableDatas[index0].datas[index].id}}" data-index="{{index}}"  data-index0="{{index0}}" bindtap="communication">和求助者沟通</button>
+                                    </view>
+                                    
+
+
+                                    <ui-modal  data-userid="{{tableDatas[index0].datas[index].user.id}}"  data-id="{{tableDatas[index0].datas[index].id}}" data-index="{{index}}"  data-index0="{{index0}}"  noNav show="{{isCancel}}" cancelText="取消" confirmText="确认" cancel="" confrimtransparent mask="40" bind:success='updateokcodeModal'>
+                                        <view class="p-5 flex-center" >
+                                            <textarea   class=" ui-textarea-wrapper dasheds-shine" bindinput="updateokcode"  auto-focus value="{{okcode}}" placeholder="请输入完成码：（完成码请联系求助者告知）" maxlength="500" />
+                                        </view>
+                                    </ui-modal>
+                                    </view>
+                                    <view slot="footer" class="_icon-waiting-o text-gray">
+                                      <text class=""></text>{{tableDatas[index0].datas[index].updatetime}}
+                                      <text  class="ext-12 text-bold ml-5  text-{{tableDatas[index0].datas[index].state.id==2?'orange':''}}"> 🪵[{{tableDatas[index0].datas[index].state.message}}]</text>
+                                      <text class="text-12 text-bold  "> 🔔[{{tableDatas[index0].datas[index].type.message}}]</text>
+                                    </view>
+                                </i-card>
+                              </view>
+                              <!-- <ui-divider bold/> -->
+                            </ui-col>
+                        </ui-row>
+                      </view>
+            </view>
+
+          </i-collapse-item>
+        </block>
+    </i-collapse>
+  
+    <ui-divider title="底下空空如也" bold/>
+    <ui-modal show="{{isMagnitifyImage}}" noNav transparent mask="40" iconCancel bind:success="magnifyImageSuccess">
+        <view class=" flex-center">
+            <image class="radius" src="{{magnitifyImageUrl==''?'':serverPath+magnitifyImageUrl}}" mode="aspectFill"/>
+        </view>
+    </ui-modal>
+
+
+</ui-sys>

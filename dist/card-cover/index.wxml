@@ -1,0 +1,21 @@
+
+  <cover-view class="i-class i-card {{ full ? 'i-card-full' : '' }}" style="display: flex;">
+    <cover-view class="i-class i-card-header">
+        <cover-view class="i-card-header-content">
+            <slot name="image" class="i-card-header-thumb "></slot>
+            <!-- <image  style="border-radius: 50%;" src="{{ thumb }}" mode="aspectFit" wx:if="{{ thumb }}" /> -->
+            <slot name="top-info" ></slot>
+        </cover-view>
+        <cover-view class="i-card-header-extra" >
+        <slot name="extra"></slot>
+        </cover-view>
+    </cover-view>
+    <cover-view class="i-class i-card-body" style="font-weight: bolder;font-size:48rpx;">{{ title }}</cover-view>
+    <cover-view class="i-class i-card-body " ><slot name="content"></slot></cover-view>
+    <cover-view class="i-class i-card-footer"><slot name="footer"></slot></cover-view>
+    <cover-view style="display: inline;position: absolute;bottom: 0;right: 20rpx;"><slot name="num"></slot></cover-view>
+  
+  
+</cover-view>
+
+

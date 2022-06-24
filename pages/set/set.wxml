@@ -1,0 +1,12 @@
+<!--pages/set/set.wxml-->
+<ui-sys bg="ui-BG" footer="{{false}}" >
+  <ui-menu  ui="mt-5 border radius">
+      <button class="bg-blue" bindtap="checkUserSettle">查看用户协议</button>
+  </ui-menu>
+  <ui-menu wx:if="{{loginUser!=null}}" ui="mt-5 border radius">
+      <button class="bg-blue" bindtap="navToLogout">退出登录</button>
+  </ui-menu>
+  <ui-menu wx:if="{{loginUser==null}}" ui="mt-5 border radius">
+      <button class="bg-blue" bindtap="navToLogin">立即登录</button>
+  </ui-menu>
+</ui-sys>

@@ -1,0 +1,109 @@
+
+{
+  "pages":[
+
+    "pages/index/index",
+    "pages/chat/chat",
+    "pages/register/register",
+    "pages/login/login",
+    "pages/my-issue/my-issue",
+    "pages/my-help/my-help",
+    "pages/set/set",
+    "pages/volunInfo/volunInfo",
+    "pages/me-detail/me-detail",
+    "pages/me/me",
+    "pages/issue/issue",
+    "pages/about/about",
+    "pages/map/map",
+    "pages/forget-pasw/forget-pasw"
+  ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于查询您当前的城市信息" 
+    }
+  },
+  "tabBar": {
+    "color": "#8799A3",
+    "selectedColor": "#E03997",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "position": "bottom",
+    "list": [
+    {
+      "pagePath": "pages/index/index",
+      "text": "首页",
+      "iconPath": "./static/tab_icon/document.png",
+      "selectedIconPath": "./static/tab_icon/document_cur.png"
+    },
+    {
+      "pagePath": "pages/issue/issue",
+      "text": "发布",
+      "iconPath": "./static/tab_icon/test.png",
+      "selectedIconPath": "./static/tab_icon/test_cur.png"
+    },
+    {
+      "pagePath": "pages/map/map",
+      "text": "地图",
+      "iconPath": "./static/tab_icon/custom.png",
+      "selectedIconPath": "./static/tab_icon/custom_cur.png"
+    },
+    {
+      "pagePath": "pages/me/me",
+      "text": "我的",
+      "iconPath": "./static/tab_icon/my.png",
+      "selectedIconPath": "./static/tab_icon/my_cur.png"
+    }
+  ]
+  },
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "农村帮帮帮",
+    "navigationBarTextStyle":"black"
+  },
+  "usingComponents": {
+      "c-card":"./dist/card-cover/index",
+      "i-card":"./dist/card/index",
+      "i-collapse": "./dist/collapse/index",
+      "i-collapse-item": "./dist/collapse-item/index",
+      "ui-sys": "./MP-CU-main/mp-cu/colorUI/components/ui-sys/ui-sys",
+      "ui-title": "./MP-CU-main/mp-cu/colorUI/components/ui-title/ui-title",
+      "ui-code": "./MP-CU-main/mp-cu/colorUI/components/ui-code/ui-code",
+      "ui-loading": "./MP-CU-main/mp-cu/colorUI/components/ui-loading/ui-loading",
+      "ui-menu": "./MP-CU-main/mp-cu/colorUI/components/ui-menu/ui-menu",
+      "ui-menu-item": "./MP-CU-main/mp-cu/colorUI/components/ui-menu-item/ui-menu-item",
+      "ui-avatar": "./MP-CU-main/mp-cu/colorUI/components/ui-avatar/ui-avatar",
+      "ui-avatar-cover": "./MP-CU-main/mp-cu/colorUI/components/ui-avatar-cover/ui-avatar",
+      "ui-avatar-stack": "./MP-CU-main/mp-cu/colorUI/components/ui-avatar-stack/ui-avatar-stack",
+      "ui-modal": "./MP-CU-main/mp-cu/colorUI/components/ui-modal/ui-modal",
+      "ui-toast": "./MP-CU-main/mp-cu/colorUI/components/ui-toast/ui-toast",
+      "ui-switch": "./MP-CU-main/mp-cu/colorUI/components/ui-switch/ui-switch",
+      "ui-radio-group": "./MP-CU-main/mp-cu/colorUI/components/ui-radio-group/ui-radio-group",
+      "ui-radio": "./MP-CU-main/mp-cu/colorUI/components/ui-radio/ui-radio",
+      "ui-card": "./MP-CU-main/mp-cu/colorUI/components/ui-card/ui-card",
+      "ui-fixed": "./MP-CU-main/mp-cu/colorUI/components/ui-fixed/ui-fixed",
+      "ui-img": "./MP-CU-main/mp-cu/colorUI/components/ui-img/ui-img",
+      "ui-navbar": "./MP-CU-main/mp-cu/colorUI/components/ui-navbar/ui-navbar",
+      "ui-swiper": "./MP-CU-main/mp-cu/colorUI/components/ui-swiper/ui-swiper",
+      "ui-text-size": "./MP-CU-main/mp-cu/colorUI/components/ui-text-size/ui-text-size",
+      "ui-tag": "./MP-CU-main/mp-cu/colorUI/components/ui-tag/ui-tag",
+      "ui-tag-cover": "./MP-CU-main/mp-cu/colorUI/components/ui-tag-cover/ui-tag",
+      "ui-progress": "./MP-CU-main/mp-cu/colorUI/components/ui-progress/ui-progress",
+      "ui-tab": "./MP-CU-main/mp-cu/colorUI/components/ui-tab/ui-tab",
+      "ui-popover" : "./MP-CU-main/mp-cu/colorUI/components/ui-popover/ui-popover",
+      "ui-steps" : "./MP-CU-main/mp-cu/colorUI/components/ui-steps/ui-steps",
+      "ui-form" : "./MP-CU-main/mp-cu/colorUI/components/ui-form/ui-form",
+      "ui-form-group" : "./MP-CU-main/mp-cu/colorUI/components/ui-form-group/ui-form-group",
+      "ui-input-box" : "./MP-CU-main/mp-cu/colorUI/components/ui-input-box/ui-input-box",
+      "ui-checkbox" : "./MP-CU-main/mp-cu/colorUI/components/ui-checkbox/ui-checkbox",
+      "ui-checkbox-group" : "./MP-CU-main/mp-cu/colorUI/components/ui-checkbox-group/ui-checkbox-group",
+      "ui-change-theme": "./MP-CU-main/mp-cu/colorUI/components/ui-change-theme/ui-change-theme",
+      "ui-search-bar": "./MP-CU-main/mp-cu/colorUI/components/ui-search-bar/ui-search-bar",
+      "ui-col":"./MP-CU-main/packageB/components/ui-col/ui-col",
+      "ui-row":"./MP-CU-main/packageB/components/ui-row/ui-row",
+      "ui-divider" : "./MP-CU-main/packageB/components/ui-divider/ui-divider"
+  },
+ 
+  "darkmode": true,
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,93 @@
+<!--pages/me-detail/me-detail.wxml-->
+<ui-sys bg="ui-BG" footer="{{false}}" >
+      <view class="p-6 text-center">
+        <ui-avatar  src="{{loginUser&&loginUser.headimg!=''?serverPath+loginUser.headimg:''}}"  bindtap="uploadHeadImg" ui="round sl  bg-{{user.sex=='男'?'blue':'pink'}}">
+                  <text>{{user.name}}</text>
+                  <ui-tag badge="bl" ui="shadow-yellow borders  borders-yellow" bg="bg-white" isSlot class="opacity">
+                      <text class="cicon-{{user.sex=='男'?'':'fe'}}male text-{{user.sex=='男'?'blue':'pink'}}"/>
+                      <text class="text-yellow text-bolder  shadow-white" >{{user.role==1?'志愿者':''}}</text>
+                  </ui-tag>
+            </ui-avatar>
+            <view class="text-l text-grey mt-2">注册时间:   {{loginUser.registertime}}</view>
+           
+      </view>
+
+      <ui-form ui="ui-BG mt-4">
+            <ui-form-group disabled required icon="cicon-avatar-o text-gray">
+                <ui-input-box>
+                    <input  maxlength="12" class="ui-input-wrapper" bindinput="updateUsername"  auto-focus value="{{user.username}}" placeholder="用户名(最大12位)"/>
+                </ui-input-box>
+            </ui-form-group>
+            <ui-form-group  disabled="{{isLoading}}" required icon="cicon-safe-check text-gray">
+                <ui-input-box isType="password">
+                    <input maxlength="12" class="ui-input-wrapper" bindinput="updatePassword" type="password" value="{{user.password}}" placeholder="密码(最大12位)"/>
+                </ui-input-box>
+            </ui-form-group>
+           
+            <ui-form-group disabled="{{isLoading}}"  required icon="cicon-avatar text-gray">
+                <ui-input-box>
+                    <input maxlength="5" bindinput="updateName" class="ui-input-wrapper" value="{{user.name}}" placeholder="姓名（最大5位）"/>
+                </ui-input-box>
+            </ui-form-group>
+
+            <ui-form-group disabled="{{isLoading}}" required icon="cicon-mobile text-gray">
+                <ui-input-box>
+                    <input maxlength="11" class="ui-input-wrapper" bindinput="updatePhone" value="{{user.phone}}" placeholder="手机号"/>
+                </ui-input-box>
+            </ui-form-group>
+           
+
+            <ui-form-group disabled="{{isLoading}}" title="性别：" icon="cicon-{{user.sex=='男'?'':'fe'}}male text-{{user.sex=='男'?'blue':'pink'}}" contentui="justify-end" ui="text-gray ml-2" >
+              <ui-radio-group bg="bg-green-gradient" value="{{user.sex=='男'?1:2}}" bind:change="SexRadioChange">
+                <ui-radio label="1" >男</ui-radio>
+                <ui-radio label="2">女</ui-radio>
+               </ui-radio-group>
+            </ui-form-group>
+            
+
+
+        
+            <ui-form-group  disabled   required icon="cicon-chat text-gray" ui="text-dark-5 " titleTop  isAction> 
+              <ui-input-box isType="textarea"  showTag>
+                  <textarea class="ui-textarea-wrapper" bindinput="updateMessage" value="{{volumentthink}}" placeholder="志愿者状态信息" maxlength="500" />
+               </ui-input-box> 
+            </ui-form-group>
+            <ui-form-group wx:if="{{isVolun}}" disabled="{{isLoading}}"  icon="cicon-android text-gray" ui="text-dark-5 "  isAction>
+                <ui-input-box>
+                  <button  class="ui-btn bg-pink sm" bindtap="resubmitVolun">重新提交志愿者审核</button>
+                </ui-input-box>      
+            </ui-form-group>
+            <ui-form-group disabled="{{isLoading}}" required icon="cicon-numcode text-gray" isAction>
+                <ui-input-box>
+                    <input maxlength="6" class="ui-input-wrapper" bindinput="updateCode" value="{{code}}" placeholder="验证码"/>
+                </ui-input-box>
+                <view slot="action">
+                    <button class="ui-btn bg-blue-gradient sm" data-len="6" bindtap="getRandom">{{sysCode}}</button>
+                </view>
+            </ui-form-group>
+
+           
+        </ui-form>
+      
+        <view class="my-3">
+            <ui-checkbox value="{{check}}" bind:change="checkChange">我已阅读并接受
+              <text class="torch text-blue  borders-bottom border-blue" bindtap="checkUserSettle">沁柚网用户协定</text>
+            </ui-checkbox>
+         
+        </view>
+        <view class="mt-5">
+            <button class="ui-btn bg-blue-gradient radius lg block shadow-blue" bindtap="updateSubmit" disabled="{{isLoading}}">
+                <text>修改</text>
+                <text class="cicon-loading1 icon-spin ml-3" wx:if="{{isLoading}}"/>
+            </button>
+        </view>
+        <view class="mt-3">
+            <button class="ui-btn bg-blue-gradient radius lg block shadow-blue" bindtap="navToLogout" disabled="{{isLoading}}">
+                <text>退出登录</text>
+                <text class="cicon-loading1 icon-spin ml-3" wx:if="{{isLoading}}"/>
+        
+            </button>
+        </view>
+         
+         
+</ui-sys>

@@ -1,0 +1,73 @@
+<!--pages/forget-pasw/forget-pasw.wxml-->
+<c-card i-class="radius text-14 "   title="[{{markers.tabledata.title}}]"  thumb="{{markers.tabledata.user.headimg}}">
+              <!-- <view slot="num" class="text-gray">#{{index+1}}</view> -->
+              <cover-view slot="image" class="inline-block" >
+                <ui-avatar-cover src="{{markers.tabledata.user&&markers.tabledata.user.headimg!=''?serverPath+markers.tabledata.user.headimg:''}}" bindtap="navToMeDetail" ui="round xl  bg-{{markers.tabledata.user.sex=='男'?'blue':'pink'}}">
+                  <cover-view  style="display: inline;">{{markers.tabledata.user.name}}</cover-view>
+                  <ui-tag-cover badge="bl" ui="shadow-yellow borders  borders-yellow" bg="bg-white" isSlot class="opacity">
+                      <cover-view  style="display: inline;" class="cicon-{{markers.tabledata.user.sex=='男'?'':'fe'}}male text-{{markers.tabledata.user.sex=='男'?'blue':'pink'}}"/>
+                      <cover-view  style="display: inline;" class="text-yellow text-bolder  shadow-white" >{{markers.tabledata.user.role==1?'志愿者':''}}</cover-view>
+                  </ui-tag-cover>
+                </ui-avatar-cover>
+              </cover-view>
+              <cover-view slot="top-info" class="inline-block ml-3">
+                <cover-view  style="display: inline;"  style=" white-space:pre-wrap">{{markers.tabledata.user.name}}</cover-view>
+                <cover-view  style="display: inline;" class="text-10 text-red" wx:if="{{loginUser!=null&&loginUser.id==markers.tabledata.user.id}}">
+                    [自己]
+                </cover-view> 
+                <cover-view  style="display: inline;" class="text-10 text-red" wx:elif="{{loginUser!=null&&loginUser.id==markers.tabledata.user.id&&markers.tabledata.helpUser!=null&&loginUser.id==markers.tabledata.helpUser.id}}">
+                    [自己][帮助过]
+                </cover-view> 
+                <cover-view  style="display: inline;" class="text-10 text-red" wx:elif="{{loginUser!=null&&loginUser.id!=markers.tabledata.user.id&&markers.tabledata.helpUser!=null&&loginUser.id==markers.tabledata.helpUser.id}}">
+                    [帮助过]
+                </cover-view> 
+              </cover-view>
+              <cover-view slot="extra" >
+                <cover-view  style="display: inline;" class="mr-3"> 🔒{{markers.tabledata.emergency.message}}</cover-view>
+              </cover-view>
+              <cover-view slot="content" >
+                <cover-view class="text-14" style="white-space:pre-wrap">{{markers.tabledata.message}}</cover-view>
+              
+                <block  wx:if="{{markers.tabledata.images!=''}}" wx:for="{{markers.tabledata.images}}" wx:for-index="index2">
+                <cover-image wx:if="{{index2<3}}" class="m-1 radius" data-id-child="{{index2}}" data-id-father="{{index}}" data-type="father" src="{{serverPath+markers.tabledata.images[index2]}}" bindtap="magnifyImage" style="width: 130rpx;height: 130rpx;position: relative; padding-right: 20rpx;white-space:pre-wrap"> 
+                </cover-image>
+                <cover-view  style="display: inline;" class="text-14 text-grey" style="float: right;"  wx:if="{{index2==3}}">
+                    更多图片
+                </cover-view>
+              </block>
+           
+              <cover-view class="my-3" >
+                <cover-view  style="display: inline;" class="cicon-mobile-o text-black"  style=" white-space:pre-wrap">:{{loginUser!=null&&loginUser.role==1?markers.tabledata.user.phone:'***********'}}</cover-view>
+              </cover-view>
+              <cover-view class="my-4">
+                <cover-view  style="display: inline;" class="cicon-location-on text-black"  style=" white-space:pre-wrap">:{{markers.title}}{{loginUser!=null&&loginUser.role==1?markers.tabledata.detailLocation:'***********'}}</cover-view>
+              </cover-view>
+    
+              <cover-view class="bg-grey text-center  p-3" wx:if="{{(markers.tabledata.helpUser!=null&&markers.tabledata.state.id==2)}}">
+                <ui-avatar-cover  src="{{markers.tabledata.helpUser&&markers.tabledata.helpUser.headimg!=''?serverPath+markers.tabledata.helpUser.headimg:''}}" bindtap="navToMeDetail" ui="round df  bg-{{markers.tabledata.helpUser.sex=='男'?'blue':'pink'}}">
+                  <cover-view  style="display: inline;">{{tmarkers.tabledata.helpUser.name}}</cover-view>
+                  <ui-tag-cover badge="bl" ui="" bg="bg-grey" isSlot class="opacity ">
+                      <cover-view  style="display: inline;" class="text-bold  cicon-{{markers.tabledata.helpUser.sex=='男'?'':'fe'}}male text-{{markers.tabledata.helpUser.sex=='男'?'blue':'pink'}}"/>
+                     
+                  </ui-tag-cover>
+                </ui-avatar-cover>
+                <cover-view  style="display: inline;" class="text-10">  {{markers.tabledata.helpUser.name}}       志愿者已经接取发布，正在马不停蹄的完成中....</cover-view>
+              </cover-view>
+
+              <cover-view wx:elif="{{markers.tabledata.state.id==3}}" class="mt-3">
+                                      <button class="bg-orange-light" disabled="true" data-userid="{{markers.tabledata.user.id}}"  data-id="{{markers.tabledata.id}}" data-index="{{index}}" >已完成</button>
+              </cover-view>
+
+              <cover-view wx:elif="{{markers.tabledata.state.id==4}}" class="mt-3">
+                                      <button class="bg-grey-light" disabled="true" data-userid="{{markers.tabledata.user.id}}"  data-id="{{markers.tabledata.id}}" data-index="{{index}}" >已取消</button>
+              </cover-view>
+
+
+
+              </cover-view>
+              <cover-view slot="footer" class="_icon-waiting-o text-gray">
+                <cover-view style="display: inline;" class="">{{markers.tabledata.updatetime}}</cover-view>
+                <cover-view style="display: inline;"  class="ext-12 text-bold ml-5  text-{{markers.tabledata.state.id==2?'orange':''}}"> 🪵[{{markers.tabledata.state.message}}]</cover-view>
+                <cover-view  style="display: inline;" class="text-12 text-bold  "> 🔔[{{markers.tabledata.type.message}}]</cover-view>
+              </cover-view>
+          </c-card>

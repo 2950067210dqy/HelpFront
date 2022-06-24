@@ -1,0 +1,144 @@
+<ui-sys footer="{{false}}" >
+  <ui-search-bar isLeft  isRight barUi="mt-2" ui="radius" bind:confirm="searchHelp"  bind:input="getSearchText" bind:blur="searchHelp" bind:empty="searchHelp">
+    <block wx:if="{{loginUser!=null}}">
+      <ui-avatar slot="right" src="{{loginUser&&loginUser.headimg!=''?serverPath+loginUser.headimg:''}}"   bindtap="switchToMe" ui="round  bg-{{loginUser.sex=='男'?'blue':'pink'}}">
+                  <text>{{loginUser.name}}</text>
+                  <ui-tag badge="bl" ui="shadow-yellow borders  borders-yellow" bg="bg-white" isSlot class="opacity">
+                      <text class="cicon-{{loginUser.sex=='男'?'':'fe'}}male text-{{loginUser.sex=='男'?'blue':'pink'}}"/>
+                      <text class="text-yellow text-bolder  shadow-white" >{{loginUser.role==1?'志愿者':''}}</text>
+                  </ui-tag>
+                  
+       </ui-avatar>
+    </block>
+    <block wx:else>
+      <ui-avatar slot="right" ui="round text-10 bg-dark-6" bindtap="navToLogin" >未登录</ui-avatar><!--头像-->
+    </block>
+   
+    <view slot="left">
+      <ui-tag ui="cicon-location-on text-dark-6 "  info="{{locationCity}}{{locationDistrict}}" bindtap="chooseLocation"/>
+    </view>
+  </ui-search-bar>
+
+
+  <ui-card ui="shadow m-3 radius"  imgHeight="auto" img="/static/dqy/banner.jpg">
+    <view class="" slot="diy">
+        <ui-title title="工具栏" desc="setting" hasDot/>
+        <view class="ml-1 mt-1 " style="display: flex;flex-direction: row;flex-wrap: wrap;justify-content:center; align-items:center;align-content:center"> 
+                      <picker style="flex-grow: 1;"   mode="selector" range="{{stateItems}}" range-key="message" bindchange="selectorStateChange">
+                        <ui-tag ui="bg-dark-{{selectorState=='筛选状态'?5:3}}" info="{{selectorState}}"/>
+                      </picker>
+                      <picker  style="flex-grow: 1;" mode="selector" range="{{emerItems}}" range-key="message" bindchange="selectorEmerChange">
+                        <ui-tag ui="bg-dark-{{selectorEmer=='筛选紧急'?5:3}}" info="{{selectorEmer}}"/>
+                      </picker>
+                      <picker style="flex-grow: 1;"  mode="selector" range="{{typeItems}}" range-key="message" bindchange="selectorTypeChange">
+                        <ui-tag ui="bg-dark-{{selectorType=='筛选类别'?5:3}}" info="{{selectorType}}"/>
+                      </picker>
+                      <ui-tag style="flex-grow: 1;" ui="bg-dark-5" bindtap="todescOrAsc" info="{{descOrAsc=='desc'?'升序':'降序'}}"/>
+                      <ui-tag style="flex-grow: 1;" ui="bg-dark-5" bindtap="toDefault" info="默认"/>
+        </view>
+        <view class="mt-2" style="display: flex;flex-direction: row;flex-wrap:nowrap;justify-content:center; align-items:center;align-content:center"> 
+                    <picker mode="date" bindchange="fromdateChange">
+                      <ui-tag ui="bg-dark-{{fromdate=='选择日期'?5:3}}" info="{{fromdate}}"/>
+                    </picker>
+                    <picker mode="time" bindchange="fromtimeChange">
+                      <ui-tag ui="bg-dark-{{fromtime=='选择时间'?5:3}}" info="{{fromtime}}"/>
+                    </picker>
+                    <ui-tag ui="bg-dark-5 " info="—"/>
+                    <picker mode="date" bindchange="todateChange">
+                      <ui-tag ui="bg-dark-{{todate=='选择日期'?5:3}}" info="{{todate}}"/>
+                    </picker>
+                    <picker mode="time" bindchange="totimeChange">
+                      <ui-tag ui="bg-dark-{{totime=='选择时间'?5:3}} block" info="{{totime}}"/>
+                    </picker> 
+        </view>
+        <view class="mt-2" style="display: flex;flex-direction: row;flex-wrap: wrap;justify-content:center; align-items:center;align-content:center"> 
+                    <button class="ui-btn  bg-dark-5" style="width: 48%;" bindtap="removeTime">清空时间</button>
+                    <button class="ui-btn  bg-dark-5" style="width: 48%;" bindtap="okTime">确定时间</button>
+        </view>
+    </view>
+   </ui-card>
+
+<view class=" m-2" wx:for="{{tableDatas}}" wx:for-index="index">
+  <ui-row  col="12" ui="mt-2" spacing="20">
+      <ui-col  span="12">
+        <view class=" bg-white  w-100  shadow radius" style="height:auto;">
+
+          <i-card full i-class="radius {{tableDatas[index].state.id==2?'border':''}} "    title="[{{tableDatas[index].title}}]"  thumb="{{serverPath+tableDatas[index].user.headimg}}">
+              <view slot="num" class="text-gray">#{{index+1}}</view>
+              <view slot="image" class="inline-block" >
+                <ui-avatar src="{{tableDatas[index].user&&tableDatas[index].user.headimg!=''?serverPath+tableDatas[index].user.headimg:''}}" bindtap="navToMeDetail" ui="round xl  bg-{{tableDatas[index].user.sex=='男'?'blue':'pink'}}">
+                  <text>{{tableDatas[index].user.name}}</text>
+                  <ui-tag badge="bl" ui="shadow-yellow borders  borders-yellow" bg="bg-white" isSlot class="opacity">
+                      <text class="cicon-{{tableDatas[index].user.sex=='男'?'':'fe'}}male text-{{tableDatas[index].user.sex=='男'?'blue':'pink'}}"/>
+                      <text class="text-yellow text-bolder  shadow-white" >{{tableDatas[index].user.role==1?'志愿者':''}}</text>
+                  </ui-tag>
+                </ui-avatar>
+              </view>
+              <view slot="top-info" class="inline-block ml-3">
+                <text  style=" white-space:pre-wrap">{{tableDatas[index].user.name}}</text>
+                <text class="text-10 text-red" wx:if="{{loginUser!=null&&loginUser.id==tableDatas[index].user.id}}">
+                    [自己]
+                </text> 
+                <text class="text-10 text-red" wx:elif="{{loginUser!=null&&loginUser.id==tableDatas[index].user.id&&tableDatas[index].helpUser!=null&&loginUser.id==tableDatas[index].helpUser.id}}">
+                    [自己][帮助过]
+                </text> 
+                <text class="text-10 text-red" wx:elif="{{loginUser!=null&&loginUser.id!=tableDatas[index].user.id&&tableDatas[index].helpUser!=null&&loginUser.id==tableDatas[index].helpUser.id}}">
+                    [帮助过]
+                </text> 
+              </view>
+              <view slot="extra" >
+                <text class="mr-3"> 🔒{{tableDatas[index].emergency.message}}</text>
+              </view>
+              <view slot="content">
+                <view style=" white-space:pre-wrap" class="text-16">{{tableDatas[index].message}}</view>
+                <block wx:if="{{tableDatas[index].images!=''}}" wx:for="{{tableDatas[index].images}}" wx:for-index="index2">
+                <image class="m-1 radius" data-id-child="{{index2}}" data-id-father="{{index}}" data-type="father" src="{{serverPath+tableDatas[index].images[index2]}}" bindtap="magnifyImage" style="width: 130rpx;height: 130rpx;position: relative; padding-right: 20rpx;"> 
+                </image>
+              </block>
+              <view class="my-3">
+                <text class="cicon-mobile-o text-black"  style=" white-space:pre-wrap">:{{loginUser!=null&&loginUser.role==1?tableDatas[index].user.phone:'***********'}}</text>
+              </view>
+              <view class="my-4">
+                <text class="cicon-location-on text-black"  style=" white-space:pre-wrap">:{{tableDatas[index].address}}{{loginUser!=null&&loginUser.role==1?tableDatas[index].detailLocation:'***********'}}</text>
+              </view>
+              <view 
+              wx:if="{{(loginUser!=null&&loginUser.role==1)&&(tableDatas[index].helpUser==null&&tableDatas[index].state.id==1)}}">
+                <button class="bg-{{tableDatas[index].state.id==2?'orange':'pink'}}" disabled="{{tableDatas[index].state.id==2}}" data-userid="{{tableDatas[index].user.id}}"  data-id="{{tableDatas[index].id}}" data-index="{{index}}" bindtap="helpThis">{{tableDatas[index].helpUser!=null?'正在被':''}}帮助</button>
+              </view>
+              <view class="bg-grey text-center  p-3" wx:elif="{{(tableDatas[index].helpUser!=null&&tableDatas[index].state.id==2)}}">
+                <ui-avatar  src="{{tableDatas[index].helpUser&&tableDatas[index].helpUser.headimg!=''?serverPath+tableDatas[index].helpUser.headimg:''}}" bindtap="navToMeDetail" ui="round df  bg-{{tableDatas[index].helpUser.sex=='男'?'blue':'pink'}}">
+                  <text>{{tableDatas[index].helpUser.name}}</text>
+                  <ui-tag badge="bl" ui="" bg="bg-grey" isSlot class="opacity ">
+                      <text class="text-bold  cicon-{{tableDatas[index].helpUser.sex=='男'?'':'fe'}}male text-{{tableDatas[index].helpUser.sex=='男'?'blue':'pink'}}"/>
+                     
+                  </ui-tag>
+                </ui-avatar>
+                <text class="text-10">  {{tableDatas[index].helpUser.name}}       志愿者已经接取发布，正在马不停蹄的完成中....</text>
+              </view>
+
+              <view wx:elif="{{tableDatas[index].state.id==3}}" class="mt-3">
+                                      <button class="bg-orange-light" disabled="true" data-userid="{{tableDatas[index].user.id}}"  data-id="{{tableDatas[index].id}}" data-index="{{index}}" >已完成</button>
+              </view>
+
+              <view wx:elif="{{tableDatas[index].state.id==4}}" class="mt-3">
+                                      <button class="bg-grey-light" disabled="true" data-userid="{{tableDatas[index].user.id}}"  data-id="{{tableDatas[index].id}}" data-index="{{index}}" >已取消</button>
+              </view>
+
+
+
+              </view>
+              <view slot="footer" class="_icon-waiting-o text-gray">
+                <text class=""></text>{{tableDatas[index].updatetime}}
+                <text  class="ext-12 text-bold ml-5  text-{{tableDatas[index].state.id==2?'orange':''}}"> 🪵[{{tableDatas[index].state.message}}]</text>
+                <text class="text-12 text-bold  "> 🔔[{{tableDatas[index].type.message}}]</text>
+              </view>
+          </i-card>
+        </view>
+        <!-- <ui-divider bold/> -->
+      </ui-col>
+   </ui-row>
+</view>
+ 
+<ui-divider title="底下空空如也" bold/>
+
+</ui-sys>

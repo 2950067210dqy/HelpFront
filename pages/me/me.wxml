@@ -1,0 +1,107 @@
+<!--pages/me/me.wxml-->
+<ui-sys bg="bg-gray-f" footer="{{false}}" >
+    <view class="ui-container">
+      <block wx:if="{{loginUser!=null}}">
+        <view class="flex-bar my-4"  bindtap="navToMeDetail">
+          <ui-avatar slot="right" src="{{loginUser&&loginUser.headimg!=''?serverPath+loginUser.headimg:''}}" bindtap="navToMeDetail" ui="round sl  bg-{{loginUser.sex=='男'?'blue':'pink'}}">
+                  <text>{{loginUser.name}}</text>
+                  <ui-tag badge="bl" ui="shadow-yellow borders  borders-yellow" bg="bg-white" isSlot class="opacity">
+                      <text class="cicon-{{loginUser.sex=='男'?'':'fe'}}male text-{{loginUser.sex=='男'?'blue':'pink'}}"/>
+                      <text class="text-yellow text-bolder  shadow-white" >{{loginUser.role==1?'志愿者':''}}</text>
+                  </ui-tag>
+            </ui-avatar>
+            <view class="flex-sub pl-3">
+                <view class="text-xl">{{loginUser.name}}</view>
+            </view>
+            <view class=" ">
+                <view class="text-l text-grey">注册时间:   {{loginUser.registertime}}</view>
+            </view>
+        </view>
+      </block>
+      <block wx:else>
+        <view class="flex-bar my-4 "  bindtap="navToLogin">
+          <ui-avatar slot="right" ui="round sl bg-blue text-14" bindtap="navToLogin" >未登录</ui-avatar><!--头像-->
+          <view class="flex-sub pl-3">
+                <view class="text-xl">登录,享受更多农村帮帮帮功能。</view>
+          </view>
+        </view>
+      </block>
+
+      <ui-card wx:if="{{loginUser!=null}}" ui=" border radius"  title="我的发布">
+        <ui-row ui="m-2" col="24">
+            <ui-col span="4" data-type="1" bindtap="navToMyIssue">
+              <ui-avatar ui="radius xl bg-green-gradient">
+                <text class="text-12">已发布</text>
+                <ui-tag wx:if="{{myIssueEachNum.myIssueBy1!=0}}" badge="tl" ui="borders border-red shadow-red" bg="bg-red" isSlot>{{myIssueEachNum.myIssueBy1}}</ui-tag>
+              </ui-avatar>
+            </ui-col>
+            <ui-col span="1"/>
+            <ui-col span="4" data-type="2" bindtap="navToMyIssue">
+              <ui-avatar ui="radius xl bg-green-gradient">
+                <text class="text-12">进行中</text>
+                <ui-tag wx:if="{{myIssueEachNum.myIssueBy2!=0}}" badge="tl" ui="borders border-red shadow-red" bg="bg-red" isSlot>{{myIssueEachNum.myIssueBy2}}</ui-tag>
+              </ui-avatar>
+            </ui-col>
+            <ui-col span="1"/>
+            <ui-col span="4" data-type="3" bindtap="navToMyIssue">
+              <ui-avatar ui="radius xl bg-green-gradient">
+                <text class="text-12">已完成</text>
+                <ui-tag wx:if="{{myIssueEachNum.myIssueBy3!=0}}" badge="tl" ui="borders border-red shadow-red" bg="bg-red" isSlot>{{myIssueEachNum.myIssueBy3}}</ui-tag>
+              </ui-avatar>
+            </ui-col>
+            <ui-col span="1"/>
+            <ui-col span="4" data-type="4" bindtap="navToMyIssue">
+              <ui-avatar ui="radius xl bg-green-gradient">
+                <text class="text-12">已取消</text>
+                <ui-tag wx:if="{{myIssueEachNum.myIssueBy4!=0}}" badge="tl" ui="borders border-red shadow-red" bg="bg-red" isSlot>{{myIssueEachNum.myIssueBy4}}</ui-tag>
+              </ui-avatar>
+            </ui-col>
+            <ui-col span="1"/>
+            <ui-col span="4" data-type="0" bindtap="navToMyIssue">
+              <ui-avatar ui="radius xl bg-green-gradient">
+                <text class="text-12">全部</text>
+              </ui-avatar>
+            </ui-col>
+           
+        </ui-row>
+      </ui-card>
+
+      <ui-card wx:if="{{loginUser!=null&&loginUser.role==1}}" ui=" border radius"  title="我的帮忙">
+        <ui-row ui="mt-2">
+            <ui-col span="6" data-type="2" bindtap="navToMyHelp">
+              <ui-avatar ui="radius xl bg-mauve-gradient">
+                <text class="text-12">进行中</text>
+                <ui-tag badge="tl" wx:if="{{myHelpEachNum.myHelpBy2!=0}}" ui="borders border-red shadow-red" bg="bg-red" isSlot>
+                  {{myHelpEachNum.myHelpBy2}}
+                </ui-tag>
+              </ui-avatar>
+            </ui-col>
+            <ui-col span="6" data-type="3" bindtap="navToMyHelp">
+              <ui-avatar ui="radius xl bg-mauve-gradient">
+                <text class="text-12">已完成</text>
+                <ui-tag badge="tl" wx:if="{{myHelpEachNum.myHelpBy3!=0}}" ui="borders border-red shadow-red" bg="bg-red" isSlot>
+                  {{myHelpEachNum.myHelpBy3}}
+                </ui-tag>
+              </ui-avatar>
+            </ui-col>
+            <ui-col span="6" data-type="4" bindtap="navToMyHelp">
+              <ui-avatar ui="radius xl bg-mauve-gradient">
+                <text class="text-12">已取消</text>
+                <ui-tag badge="tl" wx:if="{{myHelpEachNum.myHelpBy4!=0}}" ui="borders border-red shadow-red" bg="bg-red" isSlot>
+                  {{myHelpEachNum.myHelpBy4}}
+                </ui-tag>
+              </ui-avatar>
+            </ui-col>
+            <ui-col span="6" data-type="0" bindtap="navToMyHelp">
+              <ui-avatar ui="radius xl bg-mauve-gradient">
+                <text class="text-12">全部</text>
+              </ui-avatar>
+            </ui-col>
+        </ui-row>
+      </ui-card>
+
+      <ui-menu ui=" radius border">
+          <ui-menu-item arrow title="设置" icon="cicon-set" data-url="/pages/set/set" data-url-type="nav" bindtap="tapToUrl"/>
+      </ui-menu>
+    </view>
+</ui-sys>

@@ -1,0 +1,121 @@
+<!--pages/issue/issue.wxml-->
+<ui-sys footer="{{false}}" >
+  <view wx:if="{{loginUser!=null}}" class="p-3 radius">
+    
+        <ui-form ui="ui-BG mt-4">
+          <!-- <ui-form-group disabled="{{locationDistrict==''||helpinfo.adcode==''?'true':'false'}}" required icon="cicon-location-on text-gray">
+                <ui-input-box>
+                    <text class="mr-3">求助人地区:</text>
+                    <input class="ui-input-wrapper" bindinput="updateUsername"  auto-focus value="{{locationCity}}{{locationDistrict}}" />
+                </ui-input-box>
+            </ui-form-group> -->
+            <ui-form-group bindtap="inputLocation"  	disabled  required icon="cicon-location-on text-gray">
+                <ui-input-box>
+                    <text class="mr-3">求助人地区:</text>
+                    <input class="ui-input-wrappe text-cut"     value="{{LocationAddress}}" />
+                </ui-input-box>
+            </ui-form-group>
+            <ui-modal  noNav show="{{isNewLocationAddress}}" cancelText="取消" confirmText="确认" cancel="" confrimtransparent mask="40" bind:success='inputLocationModal'>
+                  <view class="p-5 flex-center">
+                      <textarea disabled  class=" ui-textarea-wrapper dasheds-shine" bindinput="updateNewLocation"  auto-focus value="{{newLocationAddress}}" placeholder="请输入地区：" maxlength="500" />
+                  </view>
+                  <view class="p-5 flex-center">
+                    <button class="bg-blue text-12" bindtap="chooseLocation">选择位置</button>
+                  </view>
+            </ui-modal>
+            <ui-form-group   icon="cicon-location-on text-gray">
+                <ui-input-box>
+                    <text class="mr-3">详细地址:</text>
+                    <input class="ui-input-wrapper" placeholder="请输入详细地址(几幢几单元门牌号)" bindinput="updateDetailLocation"  auto-focus value="{{detailLocation}}" />
+                </ui-input-box>
+            </ui-form-group>
+            <ui-form-group disabled  required icon="cicon-avatar text-gray">
+                <ui-input-box>
+                    <text class="mr-3">求助人姓名:</text>
+                    <input maxlength="5" bindinput="updateName" class="ui-input-wrapper" value="{{loginUser.name}}" placeholder="姓名（最大5位）"/>
+                    <text>{{loginUser.sex=="男"?"先生":"女士"}}</text>
+                </ui-input-box>
+            </ui-form-group>
+            <ui-form-group disabled  required icon="cicon-mobile text-gray">
+                <ui-input-box>
+                    <text class="mr-3 ">求助人手机号:</text>
+                    <input  maxlength="11" class="ui-input-wrapper" bindinput="updatePhone" value="{{loginUser.phone}}" placeholder="手机号"/>
+                </ui-input-box>
+            </ui-form-group>
+            <ui-form-group required icon="cicon-book text-gray">
+                <ui-input-box>
+                    <input  class="ui-input-wrapper" bindinput="updateTitle"  auto-focus value="{{helpinfo.title}}" placeholder="请输入标题"/>
+                </ui-input-box>
+            </ui-form-group>
+            <ui-form-group  required icon="cicon-chat text-gray " titleTop>
+              <ui-input-box isType="textarea" showTag>
+                  <textarea class="ui-textarea-wrapper" bindinput="updateMessage" value="{{helpinfo.message}}" placeholder="请输入内容" maxlength="500" />
+               </ui-input-box>
+            </ui-form-group>
+
+               
+            <ui-form-group title="相关图片："  contentui="" ui="text-gray ml-2  " icon="cicon-pic text-grey">
+            <view style="display: flex;flex-direction: row;flex-wrap: wrap;" >
+              <block wx:for="{{imageNums}}" wx:for-index="index">
+                <image class="m-1 radius" data-id="{{index}}" data-type="father" src="{{serverPath+imageNums[index]}}" bindtap="magnifyImage" style="width: 130rpx;height: 130rpx;position: relative;"> 
+                  <ui-tag  data-id="{{index}}" data-type="child" bindtap="unloadImage" badge="br" ui="borders border-red shadow-red mt-2 mr-2"  bg="bg-red" isSlot>X</ui-tag>
+                </image>
+              </block>
+
+              <view class="w-100" style="position:relative;bottom: 0;margin-top: 10%; ">
+                <button  class="text-12 bg-brown-gradient" bindtap="uploadImage">上传图片</button>
+              </view>
+            </view>
+             </ui-form-group> 
+
+            <ui-form-group required icon="cicon-notice text-gray">
+                <ui-input-box>
+                    <picker mode="selector" range="{{typeNums}}" range-key="message" value="{{typeIndex}}" class="w-100" bindchange="typeChange">
+                       <view><text class="text-gray mr-5">类别: </text> {{typeIndex == null ? "请选择类型":typeNums[typeIndex].message}}</view>
+                    </picker>
+                </ui-input-box>
+            </ui-form-group>
+            <ui-form-group required icon="cicon-safe-check text-gray">
+                <ui-input-box>
+                    <picker mode="selector" range="{{emergencyNums}}" range-key="message" value="{{emergencyIndex}}" class="w-100" bindchange="emergencyChange">
+                       <view><text class="text-gray mr-5">紧急程度: </text>
+                        {{emergencyIndex == null ? "请选择紧急程度":emergencyNums[emergencyIndex].message}}
+                       </view>
+                    </picker>
+                </ui-input-box>
+            </ui-form-group>
+
+          
+           
+
+          
+         
+            
+
+            <ui-form-group required icon="cicon-numcode text-gray" isAction>
+                <ui-input-box>
+                    <input maxlength="6" class="ui-input-wrapper" bindinput="updateCode" value="{{code}}" placeholder="验证码"/>
+                </ui-input-box>
+                <view slot="action">
+                    <button class="ui-btn bg-blue-gradient sm" data-len="6" bindtap="getRandom">{{sysCode}}</button>
+                </view>
+            </ui-form-group>
+        </ui-form>
+      
+        <view class="mt-5">
+            <button class="ui-btn bg-blue-gradient radius lg block shadow-blue" bindtap="issueSubmit" disabled="{{isLoading}}">
+                <text>发布</text>
+                <text class="cicon-loading1 icon-spin ml-3" wx:if="{{isLoading}}"/>
+            </button>
+        </view>
+       
+
+
+       
+        <ui-modal show="{{isMagnitifyImage}}" noNav transparent mask="40" iconCancel bind:success="magnifyImageSuccess">
+        <view class=" flex-center">
+            <image class="radius" src="{{magnitifyImageUrl==''?'':serverPath+magnitifyImageUrl}}" mode="aspectFill"/>
+        </view>
+        </ui-modal>
+    </view>
+</ui-sys>

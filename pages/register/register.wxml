@@ -1,0 +1,90 @@
+<!--pages/register/register.wxml-->
+<ui-sys bg="ui-BG" footer="{{false}}" >
+  <view class="p-5">
+        <view class="text-xxl">
+            <view class="text-bold py-2">欢迎注册农村帮帮帮小程序</view>
+        </view>
+        <ui-form ui="ui-BG mt-4">
+            <ui-form-group required icon="cicon-avatar-o text-gray">
+                <ui-input-box>
+                    <input maxlength="12" class="ui-input-wrapper" bindinput="updateUsername"  auto-focus value="{{user.username}}" placeholder="用户名(最大12位)"/>
+                </ui-input-box>
+            </ui-form-group>
+            <ui-form-group  required icon="cicon-safe-check text-gray">
+                <ui-input-box isType="password">
+                    <input maxlength="12" class="ui-input-wrapper" bindinput="updatePassword" type="password" value="{{user.password}}" placeholder="密码(最大12位)"/>
+                </ui-input-box>
+            </ui-form-group>
+            <ui-form-group required icon="cicon-safe-check text-gray">
+                <ui-input-box isType="password">
+                    <input maxlength="12" class="ui-input-wrapper" bindinput="updateRePassword" type="password" value="{{repassword}}" placeholder="再次密码(最大12位)"/>
+                </ui-input-box>
+            </ui-form-group>
+            <ui-form-group required icon="cicon-avatar text-gray">
+                <ui-input-box>
+                    <input maxlength="5" bindinput="updateName" class="ui-input-wrapper" value="{{user.name}}" placeholder="姓名（最大5位）"/>
+                </ui-input-box>
+            </ui-form-group>
+
+            <ui-form-group required icon="cicon-mobile text-gray">
+                <ui-input-box>
+                    <input maxlength="11" class="ui-input-wrapper" bindinput="updatePhone" value="{{user.phone}}" placeholder="手机号"/>
+                </ui-input-box>
+            </ui-form-group>
+           
+
+            <ui-form-group title="性别：" icon="cicon-{{sexIcon}}male text-{{sexColor}}" contentui="justify-end" ui="text-gray ml-2" >
+              <ui-radio-group bg="bg-green-gradient" value="{{sexRadio}}" bind:change="SexRadioChange">
+                <ui-radio label="1" >男</ui-radio>
+                <ui-radio label="2">女</ui-radio>
+               </ui-radio-group>
+            </ui-form-group>
+            
+            <ui-form-group title="头像：" contentui="justify-end" ui="text-gray ml-2 " icon="cicon-pic text-grey">
+              <ui-avatar src="{{serverPath}}{{user.headimg}}" bindtap="uploadHeadImg" ui="round xl bg-{{sexColor}}">
+                  <text>{{user.name}}</text>
+                  <ui-tag badge="bl" bg="shadow bg-white" isSlot>
+                      <text class="cicon-{{sexIcon}}male text-{{sexColor}}"/>
+                  </ui-tag>
+              </ui-avatar>
+              <!-- <ui-avatar ui="ellipse lx text-cut text-16" bg="bg-blue-red"></ui-avatar> -->
+            </ui-form-group>
+            
+
+            <ui-form-group required icon="cicon-numcode text-gray" isAction>
+                <ui-input-box>
+                    <input maxlength="6" class="ui-input-wrapper" bindinput="updateCode" value="{{code}}" placeholder="验证码"/>
+                </ui-input-box>
+                <view slot="action">
+                    <button class="ui-btn bg-blue-gradient sm" data-len="6" bindtap="getRandom">{{sysCode}}</button>
+                </view>
+            </ui-form-group>
+
+            <ui-form-group required icon="cicon-android text-gray" ui="text-dark-5 "  isAction>
+                <ui-input-box>
+                  成为志愿者<ui-switch checked="{{isVolun}}" bind:change="updateRole" ui="ml-3" />
+                </ui-input-box>
+                
+            </ui-form-group>
+            <ui-form-group wx:if="{{isVolun}}"  required icon="cicon-chat text-gray" ui="text-dark-5 " titleTop  isAction> 
+              <ui-input-box isType="textarea"  showTag>
+                  <textarea class="ui-textarea-wrapper" bindinput="updateMessage" value="{{helpinfo.message}}" placeholder="请输入为啥成为志愿者" maxlength="500" />
+               </ui-input-box> 
+            </ui-form-group>
+        </ui-form>
+      
+        <view class="my-3">
+            <ui-checkbox value="{{check}}" bind:change="checkChange">我已阅读并接受
+              <text class="torch text-blue  borders-bottom border-blue" bindtap="checkUserSettle">沁柚网用户协定</text>
+            </ui-checkbox>
+         
+        </view>
+        <view class="mt-5">
+            <button class="ui-btn bg-blue-gradient radius lg block shadow-blue" bindtap="registerSubmit" disabled="{{isLoading}}">
+                <text>注册</text>
+                <text class="cicon-loading1 icon-spin ml-3" wx:if="{{isLoading}}"/>
+            </button>
+        </view>
+       
+    </view>
+</ui-sys>

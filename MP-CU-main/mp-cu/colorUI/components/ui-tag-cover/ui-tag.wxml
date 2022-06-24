@@ -1,0 +1,9 @@
+<cover-view class="ui-tag {{ui}} {{bg}} {{src?'img':''}} {{!isSlot && !info?'empty':''}} {{icon?'icon':''}} {{badge?'badge badge-'+badge:''}}">
+    <cover-image class="tag-img" src="{{src}}" mode="aspectFill" wx:if="{{src}}"/>
+    <cover-view>
+        <block wx:if="{{isSlot}}">
+            <slot/>
+        </block>
+        <block wx:else>{{info}}</block>
+    </cover-view>
+</cover-view>
