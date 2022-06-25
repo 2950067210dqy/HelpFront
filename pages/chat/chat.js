@@ -55,13 +55,19 @@ webSocket(){
   let that =this;
   if(globalData.socketOpen){
     globalData.socket.onMessage(function (res) {
-      console.log('收到后端服务器内容：' + res.data);
-      let data =JSON.parse(res.data);
-      var list = that.data.wxchatLists;
-      list.push(data.message);
-      that.setData({
-        wxchatLists:list  
-      });
+      if(res.data.trim()!="@live@"){
+        that.setData({
+          wxchatLists:wx.getStorageSync(''+that.data.userId)==""?[]:wx.getStorageSync(''+that.data.userId)
+        });
+      }
+     
+      // console.log('收到后端服务器内容：' + res.data);
+      // let data =JSON.parse(res.data);
+      // var list = that.data.wxchatLists;
+      // list.push(data.message);
+      // that.setData({
+      //   wxchatLists:list  
+      // });
     });
   }
 },
@@ -118,10 +124,12 @@ getUserName(){
   onLoad: function (options) {
 
     let _this = this;
-    //  _this.webSocket();
+
+    
     _this.setData({
       userId:options.userid
     });
+    _this.webSocket();
     this.setData({
       wxchatLists:wx.getStorageSync(''+this.data.userId)==""?[]:wx.getStorageSync(''+this.data.userId)
     });
@@ -198,7 +206,8 @@ getUserName(){
         list.push(temp);
         that.setData({
           wxchatLists: list,
-        })
+        });
+        wx.setStorageSync(that.data.userId+'',list);
       });
     
   },
@@ -249,7 +258,8 @@ getUserName(){
               that.setData({
                 wxchatLists: list,
                 audioType:false
-              })
+              });
+              wx.setStorageSync(that.data.userId+'',list);
               
             
           }
@@ -386,7 +396,8 @@ getUserName(){
                       list.push(temp);
                       that.setData({
                         wxchatLists: list,
-                      })
+                      });
+                      wx.setStorageSync(that.data.userId+'',list);
                       
                     
                    }

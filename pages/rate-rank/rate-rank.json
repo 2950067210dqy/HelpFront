@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "农村帮帮帮-评分排行榜",
+  "usingComponents": {
+    "chart": "plugin://echarts/chart"
+  }
+}

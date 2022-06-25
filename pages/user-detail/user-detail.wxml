@@ -1,0 +1,45 @@
+<!--pages/user-detail/user-detail.wxml-->
+<!--pages/me-detail/me-detail.wxml-->
+<ui-sys bg="ui-BG" footer="{{false}}" >
+  <ui-notify  data-userid="{{userid}}" msg="{{msg}}" duration="{{duration}}" bind:msgTap="clickMessage" show="{{show}}"/>
+      <view class="p-6 text-center">
+        <ui-avatar  src="{{user&&user.headimg!=''?serverPath+user.headimg:''}}"  ui="round sl  bg-{{user.sex=='男'?'blue':'pink'}}">
+                  <text>{{user.name}}</text>
+                  <ui-tag badge="bl" ui="shadow-yellow borders  borders-yellow" bg="bg-white" isSlot class="opacity">
+                      <text class="cicon-{{user.sex=='男'?'':'fe'}}male text-{{user.sex=='男'?'blue':'pink'}}"/>
+                      <text class="text-yellow text-bolder  shadow-white" >{{user.role==1?'志愿者':''}}</text>
+                  </ui-tag>
+            </ui-avatar>
+            <view class="text-l text-grey mt-2">注册时间:   {{user.registertime}}</view>
+           
+      </view>
+
+      <ui-form ui="ui-BG mt-4">
+            <ui-form-group disabled required icon="cicon-avatar-o text-gray">
+                <ui-input-box>
+                    <input  maxlength="12" class="ui-input-wrapper" bindinput="updateUsername"  auto-focus value="{{user.username}}" placeholder="用户名(最大12位)"/>
+                </ui-input-box>
+            </ui-form-group>
+            <ui-form-group disabled  required icon="cicon-avatar text-gray">
+                <ui-input-box>
+                    <input maxlength="5" bindinput="updateName" class="ui-input-wrapper" value="{{user.name}}" placeholder="姓名（最大5位）"/>
+                </ui-input-box>
+            </ui-form-group>
+            <ui-form-group disabled required icon="cicon-mobile text-gray">
+                <ui-input-box>
+                    <input maxlength="11" class="ui-input-wrapper" bindinput="updatePhone" value="{{user.phone}}" placeholder="手机号"/>
+                </ui-input-box>
+            </ui-form-group>
+            <ui-form-group disabled title="性别：" icon="cicon-{{user.sex=='男'?'':'fe'}}male text-{{user.sex=='男'?'blue':'pink'}}" contentui="justify-end" ui="text-gray ml-2" >
+              <ui-radio-group bg="bg-green-gradient" value="{{user.sex=='男'?1:2}}" bind:change="SexRadioChange">
+                <ui-radio label="1" >男</ui-radio>
+                <ui-radio label="2">女</ui-radio>
+               </ui-radio-group>
+            </ui-form-group>
+        </ui-form>
+        <chart wx:if="{{user.role==1}}"  chart-class="chart w-100 h-100  p-1 shadow shadow-lg " option="{{ option }}" bindinstance="onInstance" />
+     
+         
+         
+</ui-sys>
+

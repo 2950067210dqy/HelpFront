@@ -1,9 +1,10 @@
 <!--pages/me/me.wxml-->
 <ui-sys bg="bg-gray-f" footer="{{false}}" >
+  <ui-notify  data-userid="{{userid}}" msg="{{msg}}" duration="{{duration}}" bind:msgTap="clickMessage" show="{{show}}"/>
     <view class="ui-container">
       <block wx:if="{{loginUser!=null}}">
         <view class="flex-bar my-4"  bindtap="navToMeDetail">
-          <ui-avatar slot="right" src="{{loginUser&&loginUser.headimg!=''?serverPath+loginUser.headimg:''}}" bindtap="navToMeDetail" ui="round sl  bg-{{loginUser.sex=='男'?'blue':'pink'}}">
+          <ui-avatar slot="right" src="{{loginUser&&loginUser.headimg!=''?serverPath+loginUser.headimg:''}}"  bindtap="navToMeDetail" ui="round sl  bg-{{loginUser.sex=='男'?'blue':'pink'}}">
                   <text>{{loginUser.name}}</text>
                   <ui-tag badge="bl" ui="shadow-yellow borders  borders-yellow" bg="bg-white" isSlot class="opacity">
                       <text class="cicon-{{loginUser.sex=='男'?'':'fe'}}male text-{{loginUser.sex=='男'?'blue':'pink'}}"/>
@@ -101,6 +102,9 @@
       </ui-card>
 
       <ui-menu ui=" radius border">
+        <ui-menu-item   wx:if="{{loginUser!=null&&loginUser.role==1}}" arrow title="签到打卡" icon="cicon-check-round" data-url="/pages/check-in/check-in" data-url-type="nav" bindtap="tapToUrl"/>
+        <ui-menu-item   wx:if="{{loginUser!=null&&loginUser.role==1}}" arrow title="积分商城" icon="cicon-choiceness" data-url="/pages/score/score" data-url-type="nav" bindtap="tapToUrl"/>
+        <ui-menu-item   wx:if="{{loginUser!=null}}" arrow title="志愿者评分榜" icon="cicon-star" data-url="/pages/rate-rank/rate-rank" data-url-type="nav" bindtap="tapToUrl"/>
           <ui-menu-item arrow title="设置" icon="cicon-set" data-url="/pages/set/set" data-url-type="nav" bindtap="tapToUrl"/>
       </ui-menu>
     </view>

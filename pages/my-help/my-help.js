@@ -20,6 +20,9 @@ Page({
     okcode:'',
 
   },
+  navToUserDetail(e){
+    app.navToUserDetail(e);
+  },
   //获取信息
   getHelpInfo(){
     let that =this;
@@ -182,6 +185,17 @@ Page({
                 }
               });  
   },
+  //评分
+rate(e){
+  let that =this;
+  let adcode = e.target.dataset.adcode;
+  let helpInfoId=e.target.dataset.id;
+  let index = e.target.dataset.index;
+  let index0 =  e.target.dataset.index0;
+  let helperid=that.data.loginUser.id ;
+  let userId=e.target.dataset.userid;
+  app.navTo("/pages/rate/rate?userid="+userId+"&helperid="+helperid+"&helpinfoid="+helpInfoId+"&adcode="+adcode+"&type=myhelp");
+},
   //取消帮忙
   cancelThisByHelper(e){
       let that =this;
@@ -442,7 +456,7 @@ updateokcodeModal(e){
               //   }
               // });
             }else{
-              this.setData({
+              that.setData({
                 okcode:'',
                 isCancel:false
               }); 
@@ -565,6 +579,10 @@ communication(e){
       loginUser:globalData.loginUser
     });
   },
+  clickMessage(e){
+    let userid = Number(e.target.dataset.userid);
+      app.clickMessage(userid);
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -574,7 +592,16 @@ communication(e){
       // getUrl:globalData.serverPath+"helpinfo/getAllHelp"+options.type
       getUrl:"/helpinfo/getAllHelp"+options.type
     });
-    console.log(this.data);
+    let that =this;
+    app.globalData.messageCallback=(userid,name)=>{
+      console.log(that.data);
+      that.setData({
+        userid:userid,
+        show:true,
+        msg:"您有来自  "+name+"  的消息！",
+        duration:4000 
+      });
+    };
 
     this.getHelpInfo();
     // this.connectWebSocket();

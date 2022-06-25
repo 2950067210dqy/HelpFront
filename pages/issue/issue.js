@@ -570,9 +570,22 @@ inputLocationModal(res){
   /**
    * 生命周期函数--监听页面加载
    */
+  clickMessage(e){
+    let userid = Number(e.target.dataset.userid);
+      app.clickMessage(userid);
+  },
   onLoad(options) {
     this.setLocationData();
-     
+    let that = this;
+    app.globalData.messageCallback=(userid,name)=>{
+      console.log(that.data);
+      that.setData({
+        userid:userid,
+        show:true,
+        msg:"您有来自  "+name+"  的消息！",
+        duration:4000 
+      });
+    };
   },
 
   /**

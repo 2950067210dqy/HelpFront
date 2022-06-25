@@ -1,4 +1,7 @@
 {
   "navigationBarTitleText": "农村帮帮帮-我的信息",
-  "usingComponents": {}
+  "usingComponents": {
+
+    "chart": "plugin://echarts/chart"
+  }
 }

@@ -79,6 +79,9 @@ App({
       ws_heart: 0, // ws心跳定时器
       continuous_link: null,     //websocket持续连接的定时器
       lockReconnect:false,
+
+      //消息提示callback
+      messageCallback:function(){}
   },
 
     
@@ -344,16 +347,38 @@ App({
       that.globalData.socket.onMessage(function (res) {
         console.log('收到后端服务器内容：' + res.data);
         if(res.data.trim()!="@live@"){
+   
+          console.log("收到用户发来的消息"+res.data);
           let data =JSON.parse(res.data);
           let userid=data.fromuserid;
+         
           let wxmessageList=wx.getStorageSync(userid+'');
           if (wxmessageList==''){
               wxmessageList=[];
           }
           wxmessageList.push(data.message);
           wx.setStorageSync(userid+'',wxmessageList);
-        }
-      });
+          //获取用户名
+          wx.cloud.callContainer({
+            "config": {
+              "env": that.globalData.env
+            },
+            "path": "/user/selectById",
+            "header": that.globalData.contentType.cloud_normal,
+            "method": "POST",
+            data:{
+              userid:userid
+            },
+            success(res){
+              let data= res.data;
+              if(data.code==200){
+                // 全局socket接收消息的方法回调
+                that.globalData.messageCallback(userid,data.data.name);
+              }
+            }
+        });
+        }   
+      });  
     // }
   },// 接受服务端websocket消息 end
   //websocket 心跳机制  start
@@ -370,5 +395,19 @@ App({
     console.log("ws心跳结束");
     clearInterval( this.globalData.ws_heart);
     this.globalData.ws_heart = null;
-  } //websocket 关闭心跳机制  end
+  }, //websocket 关闭心跳机制  end
+  //跳转到用户信息页面 start
+  navToUserDetail(e){
+    console.log(e);
+    wx.navigateTo({
+      url: "/pages/user-detail/user-detail?userid="+e.target.dataset.userid,
+    })
+  },  //跳转到用户信息页面 end
+  //点击消息提示框 start
+  clickMessage(userid){
+    console.log("成功",userid);
+    wx.navigateTo({
+      url: '/pages/chat/chat?userid='+userid,
+    })
+  },  //点击消息提示框 end
 })

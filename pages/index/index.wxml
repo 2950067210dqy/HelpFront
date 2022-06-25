@@ -1,4 +1,5 @@
 <ui-sys footer="{{false}}" >
+  <ui-notify  data-userid="{{userid}}" msg="{{msg}}" duration="{{duration}}" bind:msgTap="clickMessage" show="{{show}}"/>
   <ui-search-bar isLeft  isRight barUi="mt-2" ui="radius" bind:confirm="searchHelp"  bind:input="getSearchText" bind:blur="searchHelp" bind:empty="searchHelp">
     <block wx:if="{{loginUser!=null}}">
       <ui-avatar slot="right" src="{{loginUser&&loginUser.headimg!=''?serverPath+loginUser.headimg:''}}"   bindtap="switchToMe" ui="round  bg-{{loginUser.sex=='男'?'blue':'pink'}}">
@@ -66,7 +67,7 @@
           <i-card full i-class="radius {{tableDatas[index].state.id==2?'border':''}} "    title="[{{tableDatas[index].title}}]"  thumb="{{serverPath+tableDatas[index].user.headimg}}">
               <view slot="num" class="text-gray">#{{index+1}}</view>
               <view slot="image" class="inline-block" >
-                <ui-avatar src="{{tableDatas[index].user&&tableDatas[index].user.headimg!=''?serverPath+tableDatas[index].user.headimg:''}}" bindtap="navToMeDetail" ui="round xl  bg-{{tableDatas[index].user.sex=='男'?'blue':'pink'}}">
+                <ui-avatar src="{{tableDatas[index].user&&tableDatas[index].user.headimg!=''?serverPath+tableDatas[index].user.headimg:''}}" data-userid="{{tableDatas[index].user.id}}" bindtap="navToUserDetail" ui="round xl  bg-{{tableDatas[index].user.sex=='男'?'blue':'pink'}}">
                   <text>{{tableDatas[index].user.name}}</text>
                   <ui-tag badge="bl" ui="shadow-yellow borders  borders-yellow" bg="bg-white" isSlot class="opacity">
                       <text class="cicon-{{tableDatas[index].user.sex=='男'?'':'fe'}}male text-{{tableDatas[index].user.sex=='男'?'blue':'pink'}}"/>
@@ -106,7 +107,7 @@
                 <button class="bg-{{tableDatas[index].state.id==2?'orange':'pink'}}" disabled="{{tableDatas[index].state.id==2}}" data-userid="{{tableDatas[index].user.id}}"  data-id="{{tableDatas[index].id}}" data-index="{{index}}" bindtap="helpThis">{{tableDatas[index].helpUser!=null?'正在被':''}}帮助</button>
               </view>
               <view class="bg-grey text-center  p-3" wx:elif="{{(tableDatas[index].helpUser!=null&&tableDatas[index].state.id==2)}}">
-                <ui-avatar  src="{{tableDatas[index].helpUser&&tableDatas[index].helpUser.headimg!=''?serverPath+tableDatas[index].helpUser.headimg:''}}" bindtap="navToMeDetail" ui="round df  bg-{{tableDatas[index].helpUser.sex=='男'?'blue':'pink'}}">
+                <ui-avatar  src="{{tableDatas[index].helpUser&&tableDatas[index].helpUser.headimg!=''?serverPath+tableDatas[index].helpUser.headimg:''}}" bindtap="navToUserDetail" data-userid="{{tableDatas[index].helpUser.id}}" ui="round df  bg-{{tableDatas[index].helpUser.sex=='男'?'blue':'pink'}}">
                   <text>{{tableDatas[index].helpUser.name}}</text>
                   <ui-tag badge="bl" ui="" bg="bg-grey" isSlot class="opacity ">
                       <text class="text-bold  cicon-{{tableDatas[index].helpUser.sex=='男'?'':'fe'}}male text-{{tableDatas[index].helpUser.sex=='男'?'blue':'pink'}}"/>

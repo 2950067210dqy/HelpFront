@@ -1,5 +1,6 @@
 <!--pages/register/register.wxml-->
 <ui-sys bg="ui-BG" footer="{{false}}" >
+
   <view class="p-5">
         <view class="text-xxl">
             <view class="text-bold py-2">欢迎注册农村帮帮帮小程序</view>

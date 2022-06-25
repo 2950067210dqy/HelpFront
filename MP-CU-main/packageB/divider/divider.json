@@ -1,5 +1,0 @@
-{
-  "usingComponents": {
-    "ui-divider" : "/packageB/components/ui-divider/ui-divider"
-  }
-}

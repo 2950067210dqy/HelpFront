@@ -1,0 +1,4 @@
+<!--pages/score/score.wxml-->
+<ui-sys footer="{{false}}" bg="">
+  <ui-notify  data-userid="{{userid}}" msg="{{msg}}" duration="{{duration}}" bind:msgTap="clickMessage" show="{{show}}"/>
+  </ui-sys>

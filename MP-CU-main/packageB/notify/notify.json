@@ -1,5 +1,0 @@
-{
-  "usingComponents": {
-    "ui-notify" : "/packageB/components/ui-notify/ui-notify"
-  }
-}

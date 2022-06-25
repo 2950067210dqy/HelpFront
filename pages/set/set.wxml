@@ -1,5 +1,6 @@
 <!--pages/set/set.wxml-->
 <ui-sys bg="ui-BG" footer="{{false}}" >
+  <ui-notify  data-userid="{{userid}}" msg="{{msg}}" duration="{{duration}}" bind:msgTap="clickMessage" show="{{show}}"/>
   <ui-menu  ui="mt-5 border radius">
       <button class="bg-blue" bindtap="checkUserSettle">查看用户协议</button>
   </ui-menu>

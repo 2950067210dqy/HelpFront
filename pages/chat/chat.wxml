@@ -1,4 +1,5 @@
 <import src="./modules/chat-input/chat-input" />
+
 <view class="chat" style="height: {{height}}px">
     <scroll-view scroll-y='true'  class="chat-content" style="height: {{chatHeight}}px">
       <view >

@@ -1,5 +1,6 @@
 <!--pages/map/map.wxml-->
 <ui-sys bg="ui-BG" footer="{{false}}" >
+  <ui-notify  data-userid="{{userid}}" msg="{{msg}}" duration="{{duration}}" bind:msgTap="clickMessage" show="{{show}}"/>
   <map bindcallouttap="calloutClick"  class="w-100" style="height: 1400rpx;" markers="{{markerss}}" setting="{{setting}}" wx:if="{{ifshow}}" show-location="{{true}}">
   <cover-view bindtap="refreshMap" style="z-index: 22;font-size: 34rpx;margin-left: 20rpx;margin-top: 20rpx;background-color: rgb(48, 48, 48);opacity: 0.75;display: inline-block;color: whitesmoke;border-radius: 10rpx;height: 50rpx;line-height: 50rpx;cursor: pointer;padding: 10rpx;">
     刷新
@@ -16,7 +17,7 @@
                   <cover-view class="i-card-header-content">
                       <cover-view name="image" class="i-card-header-thumb ">
                         <cover-view  class="inline-block" >
-                            <ui-avatar-cover src="{{markers.tabledata.user&&markers.tabledata.user.headimg!=''?serverPath+markers.tabledata.user.headimg:''}}" bindtap="navToMeDetail" ui="round xl  bg-{{markers.tabledata.user.sex=='男'?'blue':'pink'}}" username="{{markers.tabledata.user.name}}">
+                            <ui-avatar-cover src="{{markers.tabledata.user&&markers.tabledata.user.headimg!=''?serverPath+markers.tabledata.user.headimg:''}}" bindtap="navToUserDetail" data-userid="{{tableDatas[index].user.id}}" ui="round xl  bg-{{markers.tabledata.user.sex=='男'?'blue':'pink'}}" username="{{markers.tabledata.user.name}}">
                                   <!-- <cover-view  style="display: inline;z-index: 25;" class="text-yellow text-bolder  shadow-white" >{{markers.tabledata.user.role==1?'志愿者':''}}</cover-view> -->
                             </ui-avatar-cover>
                             <cover-view  style="display: inline;" class="cicon-{{markers.tabledata.user.sex=='男'?'':'fe'}}male text-{{markers.tabledata.user.sex=='男'?'blue':'pink'}}">{{markers.tabledata.user.sex}}</cover-view>
@@ -69,7 +70,7 @@
                 
                           <cover-view class="bg-grey text-center  p-3" wx:if="{{(markers.tabledata.helpUser!=null&&markers.tabledata.state.id==2)}}">
                   
-                            <ui-avatar-cover src="{{markers.tabledata.helpUser&&markers.tabledata.helpUser.headimg!=''?serverPath+markers.tabledata.helpUser.headimg:''}}" bindtap="navToMeDetail" ui="round xl  bg-{{markers.tabledata.helpUser.sex=='男'?'blue':'pink'}}" username="{{markers.tabledata.helpUser.name}}">
+                            <ui-avatar-cover src="{{markers.tabledata.helpUser&&markers.tabledata.helpUser.headimg!=''?serverPath+markers.tabledata.helpUser.headimg:''}}" bindtap="navToUserDetail" data-userid="{{tableDatas[index].helpUser.id}}" ui="round xl  bg-{{markers.tabledata.helpUser.sex=='男'?'blue':'pink'}}" username="{{markers.tabledata.helpUser.name}}">
                                   <!-- <cover-view  style="display: inline;z-index: 25;" class="text-yellow text-bolder  shadow-white" >{{markers.tabledata.user.role==1?'志愿者':''}}</cover-view> -->
                             </ui-avatar-cover>
                             <cover-view  style="display: inline;" class="cicon-{{markers.tabledata.helpUser.sex=='男'?'':'fe'}}male text-{{markers.tabledata.helpUser.sex=='男'?'blue':'pink'}}">{{markers.tabledata.helpUser.sex}}</cover-view>

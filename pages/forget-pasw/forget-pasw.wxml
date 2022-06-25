@@ -2,7 +2,7 @@
 <c-card i-class="radius text-14 "   title="[{{markers.tabledata.title}}]"  thumb="{{markers.tabledata.user.headimg}}">
               <!-- <view slot="num" class="text-gray">#{{index+1}}</view> -->
               <cover-view slot="image" class="inline-block" >
-                <ui-avatar-cover src="{{markers.tabledata.user&&markers.tabledata.user.headimg!=''?serverPath+markers.tabledata.user.headimg:''}}" bindtap="navToMeDetail" ui="round xl  bg-{{markers.tabledata.user.sex=='男'?'blue':'pink'}}">
+                <ui-avatar-cover src="{{markers.tabledata.user&&markers.tabledata.user.headimg!=''?serverPath+markers.tabledata.user.headimg:''}}" bindtap="navToUserDetail" ui="round xl  bg-{{markers.tabledata.user.sex=='男'?'blue':'pink'}}">
                   <cover-view  style="display: inline;">{{markers.tabledata.user.name}}</cover-view>
                   <ui-tag-cover badge="bl" ui="shadow-yellow borders  borders-yellow" bg="bg-white" isSlot class="opacity">
                       <cover-view  style="display: inline;" class="cicon-{{markers.tabledata.user.sex=='男'?'':'fe'}}male text-{{markers.tabledata.user.sex=='男'?'blue':'pink'}}"/>
@@ -44,7 +44,7 @@
               </cover-view>
     
               <cover-view class="bg-grey text-center  p-3" wx:if="{{(markers.tabledata.helpUser!=null&&markers.tabledata.state.id==2)}}">
-                <ui-avatar-cover  src="{{markers.tabledata.helpUser&&markers.tabledata.helpUser.headimg!=''?serverPath+markers.tabledata.helpUser.headimg:''}}" bindtap="navToMeDetail" ui="round df  bg-{{markers.tabledata.helpUser.sex=='男'?'blue':'pink'}}">
+                <ui-avatar-cover  src="{{markers.tabledata.helpUser&&markers.tabledata.helpUser.headimg!=''?serverPath+markers.tabledata.helpUser.headimg:''}}" bindtap="navToUserDetail" ui="round df  bg-{{markers.tabledata.helpUser.sex=='男'?'blue':'pink'}}">
                   <cover-view  style="display: inline;">{{tmarkers.tabledata.helpUser.name}}</cover-view>
                   <ui-tag-cover badge="bl" ui="" bg="bg-grey" isSlot class="opacity ">
                       <cover-view  style="display: inline;" class="text-bold  cicon-{{markers.tabledata.helpUser.sex=='男'?'':'fe'}}male text-{{markers.tabledata.helpUser.sex=='男'?'blue':'pink'}}"/>

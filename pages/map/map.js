@@ -65,7 +65,13 @@ Page({
     },
 
   },
-
+  navToUserDetail(e){
+    app.navToUserDetail(e);
+  },
+  clickMessage(e){
+    let userid = Number(e.target.dataset.userid);
+      app.clickMessage(userid);
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -74,6 +80,15 @@ Page({
     let that =this;
     app =getApp();
     globalData=app.globalData;
+    app.globalData.messageCallback=(userid,name)=>{
+      console.log(that.data);
+      that.setData({
+        userid:userid,
+        show:true,
+        msg:"您有来自  "+name+"  的消息！",
+        duration:4000 
+      });
+    };
     let newSetting =this.data.setting;
     newSetting.latitude=globalData.latitude;
     newSetting.longitude=globalData.longitude;

@@ -4,6 +4,11 @@
 
     "pages/index/index",
     "pages/chat/chat",
+    "pages/rate/rate",
+    "pages/rate-rank/rate-rank",
+    "pages/score/score",
+    "pages/check-in/check-in",
+    "pages/user-detail/user-detail",
     "pages/register/register",
     "pages/login/login",
     "pages/my-issue/my-issue",
@@ -63,6 +68,7 @@
   },
   "usingComponents": {
       "c-card":"./dist/card-cover/index",
+      "l-rate":"./dist2/rate/index",
       "i-card":"./dist/card/index",
       "i-collapse": "./dist/collapse/index",
       "i-collapse-item": "./dist/collapse-item/index",
@@ -101,9 +107,15 @@
       "ui-search-bar": "./MP-CU-main/mp-cu/colorUI/components/ui-search-bar/ui-search-bar",
       "ui-col":"./MP-CU-main/packageB/components/ui-col/ui-col",
       "ui-row":"./MP-CU-main/packageB/components/ui-row/ui-row",
-      "ui-divider" : "./MP-CU-main/packageB/components/ui-divider/ui-divider"
+      "ui-divider" : "./MP-CU-main/packageB/components/ui-divider/ui-divider",
+      "ui-notify" : "./MP-CU-main/packageB/components/ui-notify/ui-notify"
   },
- 
+  "plugins": {
+    "echarts": {
+      "version": "1.0.7",
+      "provider": "wx1db9e5ab1149ea03"
+    }
+  },
   "darkmode": true,
   "sitemapLocation": "sitemap.json"
 }

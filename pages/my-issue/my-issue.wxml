@@ -1,5 +1,6 @@
 <!--pages/my-issue/my-issue.wxml-->
 <ui-sys footer="{{false}}" bg="bg-yellow-thin ">
+  <ui-notify  data-userid="{{userid}}" msg="{{msg}}" duration="{{duration}}" bind:msgTap="clickMessage" show="{{show}}"/>
   <i-collapse i-class="bg-blue-gradient radius mb-5"  name="name1" >
         <block wx:for="{{tableDatas}}"  wx:for-index="index0" >
           <i-collapse-item
@@ -17,7 +18,7 @@
                                 <i-card full i-class="radius " title="[{{tableDatas[index0].datas[index].title}}]"  thumb="{{serverPath+tableDatas[index0].datas[index].user.headimg}}">
                                     <view slot="num" class="text-gray">#{{index+1}}</view>
                                     <view slot="image" class="inline-block" >
-                                      <ui-avatar src="{{tableDatas[index0].datas[index].user&&tableDatas[index0].datas[index].user.headimg!=''?serverPath+tableDatas[index0].datas[index].user.headimg:''}}" bindtap="navToMeDetail" ui="round xl  bg-{{tableDatas[index0].datas[index].user.sex=='男'?'blue':'pink'}}">
+                                      <ui-avatar src="{{tableDatas[index0].datas[index].user&&tableDatas[index0].datas[index].user.headimg!=''?serverPath+tableDatas[index0].datas[index].user.headimg:''}}" data-userid="{{tableDatas[index0].datas[index].user.id}}" bindtap="navToUserDetail" ui="round xl  bg-{{tableDatas[index0].datas[index].user.sex=='男'?'blue':'pink'}}">
                                         <text >{{tableDatas[index0].datas[index].user.name}}</text>
                                         <ui-tag badge="bl" ui="shadow-yellow borders  borders-yellow" bg="bg-white" isSlot class="opacity">
                                             <text class="cicon-{{tableDatas[index0].datas[index].user.sex=='男'?'':'fe'}}male text-{{tableDatas[index0].datas[index].user.sex=='男'?'blue':'pink'}}"/>
@@ -50,7 +51,7 @@
                                       <button class="bg-grey-light" disabled="true" data-userid="{{tableDatas[index0].datas[index].user.id}}"  data-id="{{tableDatas[index0].datas[index].id}}" data-index="{{index}}" >等待帮助</button>
                                     </view>
                                     <view class="bg-grey text-center  p-3" wx:elif="{{tableDatas[index0].datas[index].helpUser!=null&&tableDatas[index0].datas[index].state.id==2}}">
-                                      <ui-avatar  src="{{tableDatas[index0].datas[index].helpUser&&tableDatas[index0].datas[index].helpUser.headimg!=''?serverPath+tableDatas[index0].datas[index].helpUser.headimg:''}}" bindtap="navToMeDetail" ui="round df  bg-{{tableDatas[index0].datas[index].helpUser.sex=='男'?'blue':'pink'}}">
+                                      <ui-avatar  src="{{tableDatas[index0].datas[index].helpUser&&tableDatas[index0].datas[index].helpUser.headimg!=''?serverPath+tableDatas[index0].datas[index].helpUser.headimg:''}}" data-userid="{{tableDatas[index0].datas[index].helpUser.id}}" bindtap="navToUserDetail" ui="round df  bg-{{tableDatas[index0].datas[index].helpUser.sex=='男'?'blue':'pink'}}">
                                         <text>{{tableDatas[index0].datas[index].helpUser.name}}</text>
                                         <ui-tag badge="bl" ui="" bg="bg-grey" isSlot class="opacity ">
                                             <text class="text-bold  cicon-{{tableDatas[index0].datas[index].helpUser.sex=='男'?'':'fe'}}male text-{{tableDatas[index0].datas[index].helpUserr.sex=='男'?'blue':'pink'}}"/>
@@ -70,6 +71,9 @@
                                     </view>
                                     <view wx:if="{{loginUser!=null&&(tableDatas[index0].datas[index].state.id==2||tableDatas[index0].datas[index].state.id==3)}}">
                                       <button class="bg-purple mt-3"  data-userid="{{tableDatas[index0].datas[index].helpUser.id}}"  data-id="{{tableDatas[index0].datas[index].id}}" data-index="{{index}}"  data-index0="{{index0}}" bindtap="communication">和志愿者沟通</button>
+                                    </view>
+                                    <view wx:if="{{loginUser!=null&&(tableDatas[index0].datas[index].state.id==3)}}">
+                                      <button class="bg-green mt-3"  data-userid="{{tableDatas[index0].datas[index].helpUser.id}}"  data-id="{{tableDatas[index0].datas[index].id}}" data-index="{{index}}"  data-index0="{{index0}}" data-adcode="{{tableDatas[index0].datas[index].adcode}}" bindtap="rate">给志愿者评分</button>
                                     </view>
                                     <view wx:if="{{loginUser!=null}}">
                                       <button class="bg-brown mt-3"  data-userid="{{tableDatas[index0].datas[index].helpUser.id}}"  data-id="{{tableDatas[index0].datas[index].id}}" data-index="{{index}}"  data-index0="{{index0}}" bindtap="FinishCodeCopy">完成码：{{tableDatas[index0].datas[index].okcode}}</button>

@@ -16,6 +16,9 @@ Page({
     isMagnitifyImage:false,
     magnitifyImageUrl:"",
   },
+  navToUserDetail(e){
+    app.navToUserDetail(e);
+  },
   //获取信息
   getHelpInfo(){
     let that =this;
@@ -277,6 +280,17 @@ communication(e){
   let loginUserId=that.data.loginUser.id;
    app.navTo("/pages/chat/chat?userid="+userid);
 },
+//评分
+rate(e){
+  let that =this;
+  let adcode = e.target.dataset.adcode;
+  let helpInfoId=e.target.dataset.id;
+  let index = e.target.dataset.index;
+  let index0 =  e.target.dataset.index0;
+  let helperid= e.target.dataset.userid;
+  let userId=that.data.loginUser.id;
+  app.navTo("/pages/rate/rate?userid="+userId+"&helperid="+helperid+"&helpinfoid="+helpInfoId+"&adcode="+adcode+"&type=myissue");
+},
   //放大图片
   magnifyImage(e){
     console.log(e);
@@ -304,6 +318,10 @@ communication(e){
       loginUser:globalData.loginUser
     });
   },
+  clickMessage(e){
+    let userid = Number(e.target.dataset.userid);
+      app.clickMessage(userid);
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -313,7 +331,16 @@ communication(e){
       // getUrl:globalData.serverPath+"helpinfo/getAllIssue"+options.type
         getUrl:"/helpinfo/getAllIssue"+options.type
     });
-    console.log(this.data);
+    let that =this;
+    app.globalData.messageCallback=(userid,name)=>{
+      console.log(that.data);
+      that.setData({
+        userid:userid,
+        show:true,
+        msg:"您有来自  "+name+"  的消息！",
+        duration:4000 
+      });
+    };
 
     this.getHelpInfo();
 

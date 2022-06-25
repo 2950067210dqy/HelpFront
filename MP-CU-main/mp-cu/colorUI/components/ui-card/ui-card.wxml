@@ -1,6 +1,6 @@
 <view class="ui-card {{ui}}">
-    <view class="ui-card-main {{imgUi}}" style="{{imgHeight?'height:'+imgHeight+';':''}} paddingTop:{{imgHeight?0:'50%'}}" wx:if="{{img}}">
-        <image class="ui-card-image" style="position:{{imgHeight==='auto'?'relative':'absolute'}}"
+    <view class="ui-card-main {{imgUi}}" style="{{imgHeight?'height:'+imgHeight+';':''}} " wx:if="{{img}}">
+        <image class="ui-card-image" style="position:{{imgHeight==='auto'?'relative':'absolute'}};width: 100%;height: 100%;"
                src="{{img}}" mode="{{imgHeight==='auto'?'widthFix':'aspectFill'}}" />
         <view class="text-cut text-lg text-bold ui-card-fixedTitle bg-mask-bottom" wx:if="{{title && fixedTitle}}">
             <view class="title">

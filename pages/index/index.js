@@ -45,6 +45,9 @@ Page({
     //升序
     descOrAsc:"desc",
   },
+  navToUserDetail(e){
+    app.navToUserDetail(e);
+  },
   //跳转登录
   navToLogin(){
     globalData.loginBackRoute="/pages/index/index";
@@ -730,6 +733,10 @@ Page({
     }
     })
   },
+  clickMessage(e){
+    let userid = Number(e.target.dataset.userid);
+      app.clickMessage(userid);
+  },
   onLoad() {
     wx.showLoading({
       title: this.data.isRefresh?'刷新中':'加载中',
@@ -738,6 +745,16 @@ Page({
     globalData=app.globalData;
     // console.log("onreadyready的globalData",globalData);
     // console.log("onshow",this.data);
+    let that =this;
+    app.globalData.messageCallback=(userid,name)=>{
+      console.log(that.data);
+      that.setData({
+        userid:userid,
+        show:true,
+        msg:"您有来自  "+name+"  的消息！",
+        duration:4000 
+      });
+    };
     this.setLocationData();
     this.setLoginUserData();
      //获取用户位置
