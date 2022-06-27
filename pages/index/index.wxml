@@ -1,5 +1,5 @@
 <ui-sys footer="{{false}}" >
-  <ui-notify  data-userid="{{userid}}" msg="{{msg}}" duration="{{duration}}" bind:msgTap="clickMessage" show="{{show}}"/>
+  <ui-notify  data-userid="{{userid}}" msg="{{msg}}" duration="{{duration}}" bind:msgTap="clickMessage"  bind:close="messageClose" show="{{show}}"/>
   <ui-search-bar isLeft  isRight barUi="mt-2" ui="radius" bind:confirm="searchHelp"  bind:input="getSearchText" bind:blur="searchHelp" bind:empty="searchHelp">
     <block wx:if="{{loginUser!=null}}">
       <ui-avatar slot="right" src="{{loginUser&&loginUser.headimg!=''?serverPath+loginUser.headimg:''}}"   bindtap="switchToMe" ui="round  bg-{{loginUser.sex=='男'?'blue':'pink'}}">
@@ -99,7 +99,7 @@
               <view class="my-3">
                 <text class="cicon-mobile-o text-black"  style=" white-space:pre-wrap">:{{loginUser!=null&&loginUser.role==1?tableDatas[index].user.phone:'***********'}}</text>
               </view>
-              <view class="my-4">
+              <view class="my-4" data-latitude="{{tableDatas[index].latitude}}" data-longitude="{{tableDatas[index].longitude}}" data-address="{{tableDatas[index].address+tableDatas[index].detailLocation}}" bindtap="routePlan">
                 <text class="cicon-location-on text-black"  style=" white-space:pre-wrap">:{{tableDatas[index].address}}{{loginUser!=null&&loginUser.role==1?tableDatas[index].detailLocation:'***********'}}</text>
               </view>
               <view 

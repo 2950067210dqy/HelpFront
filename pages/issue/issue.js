@@ -485,7 +485,7 @@ inputLocationModal(res){
               url: 'https://restapi.amap.com/v3/geocode/regeo', 
               type:"get",
               data:{
-                key:"07d47b8c7f9bec5d1ec5eda4ac3e73f5",
+                key:globalData.gaodeKey,
                 location:longitude+","+latitude
               },
               success(res){          
@@ -574,18 +574,20 @@ inputLocationModal(res){
     let userid = Number(e.target.dataset.userid);
       app.clickMessage(userid);
   },
+  messageClose(e){
+    this.setData({
+      show:false,
+    });
+  },
+  messageClose(e){
+    this.setData({
+      show:false,
+    });
+  },
   onLoad(options) {
     this.setLocationData();
     let that = this;
-    app.globalData.messageCallback=(userid,name)=>{
-      console.log(that.data);
-      that.setData({
-        userid:userid,
-        show:true,
-        msg:"您有来自  "+name+"  的消息！",
-        duration:4000 
-      });
-    };
+   
   },
 
   /**
@@ -612,6 +614,15 @@ inputLocationModal(res){
       let newhelpinfo=this.data.helpinfo;
     newhelpinfo.userid=globalData.loginUser.id;
     this.setData({helpinfo:newhelpinfo});
+    app.globalData.messageCallback=(userid,name)=>{
+      console.log(that);
+      that.setData({
+        userid:userid,
+        show:true,
+        msg:"您有来自  "+name+"  的消息！",
+        duration:2000 
+      });
+    };
     }
   
   

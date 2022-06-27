@@ -144,7 +144,14 @@ Page({
         if(data!=null){
           let oldoption=that.data.option;
           console.log(oldoption);
-          oldoption.series[0].data[0].value=[data.rateByHelper.mannerrate/data.rateByHelper.humannum,data.rateByHelper.ontimerate/data.rateByHelper.humannum,data.rateByHelper.clotherate/data.rateByHelper.humannum,data.rateByHelper.serverate/data.rateByHelper.humannum,data.rateByHelper.politerate/data.rateByHelper.humannum];
+          //tofixed 保留小数点位数 但是返回的是string 类型 +(String) 可以将string转换成Number
+          oldoption.series[0].data[0].value=[
+            +((data.rateByHelper.mannerrate/data.rateByHelper.humannum).toFixed(2)),
+            +((data.rateByHelper.ontimerate/data.rateByHelper.humannum).toFixed(2)),
+            +((data.rateByHelper.clotherate/data.rateByHelper.humannum).toFixed(2)),
+            +((data.rateByHelper.serverate/data.rateByHelper.humannum).toFixed(2)),
+            +((data.rateByHelper.politerate/data.rateByHelper.humannum).toFixed(2))
+          ];
           that.setData({isRate:true,option:oldoption});
           console.log(that.data);
         }else{
@@ -174,8 +181,14 @@ Page({
         let data = res.data.data;
         if(data!=null){ 
           let oldoption=that.data.option;
-
-          oldoption.series[0].data[1].value=[data.rateByHelpInfo.mannerrate,data.rateByHelpInfo.ontimerate,data.rateByHelpInfo.clotherate,data.rateByHelpInfo.serverate,data.rateByHelpInfo.politerate];
+           //tofixed 保留小数点位数 但是返回的是string 类型 +(String) 可以将string转换成Number
+          oldoption.series[0].data[1].value=[
+            +(data.rateByHelpInfo.mannerrate.toFixed(2)),
+            +(data.rateByHelpInfo.ontimerate.toFixed(2)),
+            +(data.rateByHelpInfo.clotherate.toFixed(2)),
+            +(data.rateByHelpInfo.serverate.toFixed(2)),
+            +(data.rateByHelpInfo.politerate.toFixed(2))
+          ];
           that.setData({isRate:true,option:oldoption});
         }else{
           that.setData({isRate:false});
@@ -281,6 +294,11 @@ Page({
     let userid = Number(e.target.dataset.userid);
       app.clickMessage(userid);
   },
+  messageClose(e){
+    this.setData({
+      show:false,
+    });
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -301,7 +319,7 @@ Page({
         userid:userid,
         show:true,
         msg:"您有来自  "+name+"  的消息！",
-        duration:4000 
+        duration:2000 
       });
     };
     this.getUser();

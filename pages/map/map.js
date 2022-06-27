@@ -35,11 +35,41 @@ Page({
    * 页面的初始数据
    */
   data: {
-    markerss:[],
+    centerLocation:{
+      latitude:0,
+      longitude:0
+    },
+    markerss:[
+      {
+        id:-1,
+        iconPath:"../../static/dqy/point.png",
+        width:20,
+        height:30,
+        label:{
+          content:globalData.locationProvince+globalData.locationCity+globalData. locationDistrict,
+          color:"#000000",
+          padding:10,
+          bgColor:'#eeeeee',
+          fontSize:13,
+          textAlign:'center',
+          borderWidth:1
+        },
+      }
+    ],
     ifshow:false,
      //放大图片
      isMagnitifyImage:false,
      magnitifyImageUrl:"",
+     //当前定位行政区域边界
+     polyline:{
+      points:[],
+      // width:5,
+      strokeWidth:5,
+      // color:"#E54D42"
+      strokeColor:"#1cbbb4",
+      fillColor:'#1cbbb433'
+     },
+     polylines:[],
     serverPath:globalData.serverPath,
     loginUser:globalData.loginUser,
     // 地图默认值setting
@@ -72,6 +102,11 @@ Page({
     let userid = Number(e.target.dataset.userid);
       app.clickMessage(userid);
   },
+  messageClose(e){
+    this.setData({
+      show:false,
+    });
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -80,23 +115,23 @@ Page({
     let that =this;
     app =getApp();
     globalData=app.globalData;
-    app.globalData.messageCallback=(userid,name)=>{
-      console.log(that.data);
-      that.setData({
-        userid:userid,
-        show:true,
-        msg:"您有来自  "+name+"  的消息！",
-        duration:4000 
-      });
-    };
+   
     let newSetting =this.data.setting;
     newSetting.latitude=globalData.latitude;
     newSetting.longitude=globalData.longitude;
+    let newmarkerss= this.data.markerss;
+    newmarkerss[0].longitude=globalData.longitude;
+    newmarkerss[0].latitude=globalData.latitude;
     this.setData({
       loginUser:globalData.loginUser,
       setting:newSetting,
-   
+      markerss:newmarkerss,
+      centerLocation:{
+        longitude:globalData.longitude,
+        latitude:globalData.latitude
+      }
     });
+    this.getCityBorderByAdcode();
     this.getAll();
     let setting = this.data.setting;
     setting.longitude=globalData.longitude;
@@ -104,6 +139,97 @@ Page({
     this.setData({
       setting
     });
+  },
+  //监听地图视野变化
+  regionChange(e){
+    console.log(e);
+    if(e.type=="end"&&e.causedBy=="drag"){
+      let centerLocation=e.detail.centerLocation;
+      let newmarkerss= this.data.markerss;
+      newmarkerss[0].longitude=centerLocation.longitude;
+      newmarkerss[0].latitude=centerLocation.latitude;
+      this.setData({
+        markerss:newmarkerss,
+        centerLocation:{
+          longitude:centerLocation.longitude,
+          latitude:centerLocation.latitude
+        }
+      });
+      let that =this;
+    wx.request({
+    url: 'https://restapi.amap.com/v3/geocode/regeo', 
+    type:"get",
+    data:{
+      key:globalData.gaodeKey,
+      location:centerLocation.longitude+","+centerLocation.latitude
+    },
+    success(res){
+      // console.log(res);
+      var object=res.data.regeocode.addressComponent;
+      if(globalData.locationAdcode!=object.adcode){
+        globalData.locationAdcode=object.adcode;
+        globalData.locationProvince=object.province;
+        typeof object.city =="string"? globalData.locationCity=object.city : globalData.locationCity=object.province;
+        globalData.locationDistrict=object.district;
+        that.refreshMap();
+      }
+    
+    }
+    })
+    }
+  },
+  //获取行政区域边界
+ async getCityBorderByAdcode(){
+   let that =this;
+  await  Http.asyncRequest(
+    'https://restapi.amap.com/v3/config/district',
+    "get", 
+    {
+          key:globalData.gaodeKey,
+          keywords:globalData.locationAdcode,
+          extensions:"all"
+    },
+    globalData.contentType.normal,
+    res=>{
+      if(res.data.infocode=="10000"){
+        let datas =res.data.districts;
+        let polylines=[];
+        for (let index = 0; index < datas.length; index++) {
+         
+          let datapolylines=datas[index].polyline;
+          let polylinesArrayZones =datapolylines.split("|");
+          for (let index1 = 0; index1 < polylinesArrayZones.length; index1++) {
+              //解决地址引用 只需要值引用
+            let polyline=JSON.parse(JSON.stringify(that.data.polyline));
+            let points=[];
+            let polylinesArray=polylinesArrayZones[index1].split(";");
+            for (let index2 = 0; index2 < polylinesArray.length; index2++) {
+                let temptArray=polylinesArray[index2].split(",");
+                if(Object.is(+(temptArray[1]), NaN)){
+                  console.log(index2+"数据出问题了");
+                  
+                }
+                if(Object.is(+(temptArray[0]), NaN)){
+                  console.log(index2+"数据出问题了")
+                }
+                let location = {
+                  latitude:+(temptArray[1]),
+                  longitude:+(temptArray[0])
+                }
+                points.push(location);
+            }
+            polyline.points=points;
+            polylines.push(polyline)  
+          }  
+        }
+        that.setData({
+          polylines:polylines
+        });  
+        console.log(that.data.polylines);
+       
+      }
+    }
+  );
   },
 calloutClick(params) {
   console.log(params);
@@ -123,6 +249,7 @@ calloutClick(params) {
   if((loginUser!=null&&loginUser.role==1)&&(marker.tabledata.helpUser==null&&marker.tabledata.state.id==1)){
       itemList.push("帮助该发布");
   }
+  itemList.push("导航");
   wx.showActionSheet({
     itemList,
     itemColor:"#3380e8",
@@ -139,15 +266,35 @@ calloutClick(params) {
             wx.previewImage({
               urls,
             })
-        }else{
+        }else  if((loginUser!=null&&loginUser.role==1)&&(marker.tabledata.helpUser==null&&marker.tabledata.state.id==1)){
           that.helpThis(marker.tabledata.user.id,marker.tabledata.id,markerId);
+        }else{
+          that.routePlan(marker.title,marker.latitude,marker.longitude);
         }
         
       }else if(type==1){
-        that.helpThis(marker.tabledata.user.id,marker.tabledata.id,markerId);
+        if((loginUser!=null&&loginUser.role==1)&&(marker.tabledata.helpUser==null&&marker.tabledata.state.id==1)){
+          that.helpThis(marker.tabledata.user.id,marker.tabledata.id,markerId);
+        }else{
+          that.routePlan(marker.title,marker.latitude,marker.longitude);
+        }
       }
     }
   })
+},
+ //路线规划
+ routePlan(addre,latitude,longitude){
+  let plugin = requirePlugin('routePlan');
+  let key = globalData.txMapKey;  //使用在腾讯位置服务申请的key
+  let referer = '农村帮帮帮小程序';   //调用插件的app的名称
+  let endPoint = JSON.stringify({  //终点
+  'name':addre,
+  'latitude': parseFloat(latitude),
+  'longitude':parseFloat(longitude)
+   });
+  wx.navigateTo({
+      url: 'plugin://routePlan/index?key=' + key + '&referer=' + referer + '&endPoint=' + endPoint
+  });
 },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -156,6 +303,28 @@ calloutClick(params) {
 
   },
   refreshMap(e){
+    let that = this;
+    this.setData({
+      polylines:[],
+      markerss:[ {
+        id:-1,
+        iconPath:"../../static/dqy/point.png",
+        width:20,
+        height:30,
+        label:{
+          content:globalData.locationProvince+globalData.locationCity+globalData. locationDistrict,
+          color:"#000000",
+          padding:10,
+          bgColor:'#eeeeee',
+          fontSize:13,
+          textAlign:'center',
+          borderWidth:1
+        },
+        latitude:that.data.centerLocation.latitude,
+        longitude:that.data.centerLocation.longitude
+      }]
+    });
+    this.getCityBorderByAdcode();
     this.getAll();
   },
   async getAll(){
@@ -167,8 +336,11 @@ calloutClick(params) {
     "config": {
       "env": app.globalData.env
     },
-    "path": "/helpinfo/selectAll",
+    "path": "/helpinfo/selectByAdcode",
     "header": app.globalData.contentType.cloud_normal,
+    data:{
+      adcode:globalData.locationAdcode
+    },
     "method": "POST",
     async success(res){
       let data= res.data;
@@ -179,7 +351,25 @@ calloutClick(params) {
       // });
       if(data.code==200){
 
-      that.setData({markerss:[]});
+      that.setData({markerss:[
+        {
+          id:-1,
+          iconPath:"../../static/dqy/point.png",
+          width:20,
+          height:30,
+          label:{
+            content:globalData.locationProvince+globalData.locationCity+globalData. locationDistrict,
+            color:"#000000",
+            padding:10,
+            bgColor:'#eeeeee',
+            fontSize:13,
+            textAlign:'center',
+            borderWidth:1
+          },
+          latitude:that.data.centerLocation.latitude,
+          longitude:that.data.centerLocation.longitude
+        }
+      ]});
       let markers = that.data.markerss;
 
 
@@ -201,7 +391,7 @@ calloutClick(params) {
             locations=locations+element.longitude+","+ element.latitude+"|";
           }
         
-          element.id=index;
+          element.id=index+1;
           elements.push(element);
      
           if(num%20==0){
@@ -318,9 +508,17 @@ calloutClick(params) {
               success: (res) => {},
             });
           }, 200);
-      }else[
+      }else{
+        if(data.message=="查询数据为空"){
+          setTimeout(function () {
+            wx.hideLoading({
+              success: (res) => {},
+            });
+          }, 200);
+        }
+      }
 
-      ]
+      
     }
   })
  },
@@ -330,7 +528,7 @@ calloutClick(params) {
     'https://restapi.amap.com/v3/geocode/regeo',
     "get", 
     {
-          key:"07d47b8c7f9bec5d1ec5eda4ac3e73f5",
+          key:globalData.gaodeKey,
           location:locations,
           batch:true
     },
@@ -364,6 +562,17 @@ calloutClick(params) {
     this.setData({
       loginUser:globalData.loginUser
     });
+    if(that.data.loginUser!=null){
+    app.globalData.messageCallback=(userid,name)=>{
+      console.log(that.data);
+      that.setData({
+        userid:userid,
+        show:true,
+        msg:"您有来自  "+name+"  的消息！",
+        duration:2000 
+      });
+    };
+  }
     if(that.data.longitude==0||that.data.latitude==0){
          //获取用户位置
        app.getSystemLocation(this);

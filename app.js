@@ -1,5 +1,9 @@
 // app.js
 import {ColorUI} from './ColorUIconfig'
+import * as ec from './utils/echarts.min';
+const comp = requirePlugin('echarts');
+// 设置自行引入的 echarts 依赖库
+comp.echarts = ec;
 App({
   ColorUI,
   onLaunch() {
@@ -7,7 +11,8 @@ App({
    wx.cloud.init({
     env:that.globalData.env
    });
-  
+   console.log("微信云托管已连接");
+   console.log('小程序启动echarts', comp.echarts.version);
 
   //   // 展示本地存储能力
   //   const logs = wx.getStorageSync('logs') || []
@@ -36,9 +41,10 @@ App({
   globalData: {
       //云托管后台环境变量
       env:"prod-5g2xgg2tab0a4b18",
-      //高德地图file
-      gaodeMap:null,
-      gaodeKey:'9c5922ea6af0410a59610b46fc3033fc',
+      //高德地图key
+      gaodeKey:"07d47b8c7f9bec5d1ec5eda4ac3e73f5",
+      //腾讯地图key
+      txMapKey:"TQ3BZ-54P6W-GWDRA-OZA7L-CBEEE-FOFOW",
       //全局data
         serverPath:"",
       // serverSocket:"",
@@ -146,7 +152,7 @@ App({
     url: 'https://restapi.amap.com/v3/geocode/regeo', 
     type:"get",
     data:{
-      key:"07d47b8c7f9bec5d1ec5eda4ac3e73f5",
+      key:that.globalData.gaodeKey,
       location:longitude+","+latitude
     },
     success(res){

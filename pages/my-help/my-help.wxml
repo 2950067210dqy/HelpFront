@@ -1,6 +1,6 @@
 <!--pages/my-issue/my-issue.wxml-->
 <ui-sys footer="{{false}}" bg="bg-yellow-thin ">
-  <ui-notify  data-userid="{{userid}}" msg="{{msg}}" duration="{{duration}}" bind:msgTap="clickMessage" show="{{show}}"/>
+  <ui-notify  data-userid="{{userid}}" msg="{{msg}}" duration="{{duration}}" bind:msgTap="clickMessage" bind:close="messageClose" show="{{show}}"/>
   <i-collapse i-class="bg-blue-gradient radius mb-5"  name="name1" >
         <block wx:for="{{tableDatas}}"  wx:for-index="index0" >
           <i-collapse-item

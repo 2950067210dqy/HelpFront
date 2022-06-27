@@ -118,7 +118,14 @@ Page({
           console.log(datas);
           for (let index = 0; index < datas.length; index++) {
             if(index<3){
-              oldoptions[index].series[0].data[0].value=[datas[index].rateByHelper.mannerrate/datas[index].rateByHelper.humannum,datas[index].rateByHelper.ontimerate/datas[index].rateByHelper.humannum,datas[index].rateByHelper.clotherate/datas[index].rateByHelper.humannum,datas[index].rateByHelper.serverate/datas[index].rateByHelper.humannum,datas[index].rateByHelper.politerate/datas[index].rateByHelper.humannum];
+               //tofixed 保留小数点位数 但是返回的是string 类型 +(String) 可以将string转换成Number
+              oldoptions[index].series[0].data[0].value=[
+                +((datas[index].rateByHelper.mannerrate/datas[index].rateByHelper.humannum).toFixed(2)),
+                +((datas[index].rateByHelper.ontimerate/datas[index].rateByHelper.humannum).toFixed(2)),
+                +((datas[index].rateByHelper.clotherate/datas[index].rateByHelper.humannum).toFixed(2)),
+                +((datas[index].rateByHelper.serverate/datas[index].rateByHelper.humannum).toFixed(2)),
+                +((datas[index].rateByHelper.politerate/datas[index].rateByHelper.humannum).toFixed(2))
+              ];
             }
            
           }
@@ -134,6 +141,11 @@ Page({
   clickMessage(e){
     let userid = Number(e.target.dataset.userid);
       app.clickMessage(userid);
+  },
+  messageClose(e){
+    this.setData({
+      show:false,
+    });
   },
   /**
    * 生命周期函数--监听页面加载
@@ -171,7 +183,7 @@ Page({
         userid:userid,
         show:true,
         msg:"您有来自  "+name+"  的消息！",
-        duration:4000 
+        duration:2000 
       });
     };
     this.getRateByHelperDatas();

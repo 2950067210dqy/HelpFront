@@ -1,6 +1,7 @@
 <!--pages/rate/rate.wxml-->
+<wxs module="numFilters" src="../../utils/numtool.wxs"></wxs>
 <ui-sys footer="{{false}}" bg="">
-  <ui-notify  data-userid="{{userid}}" msg="{{msg}}" duration="{{duration}}" bind:msgTap="clickMessage" show="{{show}}"/>
+  <ui-notify  data-userid="{{userid}}" msg="{{msg}}" duration="{{duration}}" bind:msgTap="clickMessage" bind:close="messageClose" show="{{show}}"/>
         <view class="bg-grey-gradient">
           <ui-title title="志愿者信息" desc="info" bg="" titleUi descUi="text-white"  hasDot/>
           <view class="flex-bar   p-3"  >
@@ -16,12 +17,12 @@
             </view>
            
             <view class="text-14 mr-5" >
-              <view class="mt-2 text-18 text-yellow">综合：{{(option.series[0].data[0].value[0]+option.series[0].data[0].value[1]+option.series[0].data[0].value[2]+option.series[0].data[0].value[3]+option.series[0].data[0].value[4])/5}}  分  </view>
-              <view class="mt-2">态度：{{option.series[0].data[0].value[0]}}  分  </view>
-              <view class="mt-2">准时：{{option.series[0].data[0].value[1]}}  分  </view>
-              <view class="mt-2">着装：{{option.series[0].data[0].value[2]}}  分  </view>
-              <view class="mt-2">服务：{{option.series[0].data[0].value[3]}}  分  </view>
-              <view class="mt-2">礼貌：{{option.series[0].data[0].value[4]}}  分  </view>
+              <view class="mt-2 text-18 text-yellow">综合：{{numFilters.toFix2((option.series[0].data[0].value[0]+option.series[0].data[0].value[1]+option.series[0].data[0].value[2]+option.series[0].data[0].value[3]+option.series[0].data[0].value[4])/5)}}  分  </view>
+              <view class="mt-2">态度：{{numFilters.toFix2(option.series[0].data[0].value[0])}}  分  </view>
+              <view class="mt-2">准时：{{numFilters.toFix2(option.series[0].data[0].value[1])}}  分  </view>
+              <view class="mt-2">着装：{{numFilters.toFix2(option.series[0].data[0].value[2])}}  分  </view>
+              <view class="mt-2">服务：{{numFilters.toFix2(option.series[0].data[0].value[3])}}  分  </view>
+              <view class="mt-2">礼貌：{{numFilters.toFix2(option.series[0].data[0].value[4])}}  分  </view>
             </view>
            
         </view>
@@ -38,11 +39,11 @@
 </view>
 <view wx:if="{{isRate}}" class="p-3">
   <ui-title class="w-100" title="当前评分" desc="rate" hasDot/>
-  <text style="display: inline-block;" class="text-22">态度：</text><l-rate style="display: inline-block;"  disabled size="88" score="{{option.series[0].data[1].value[0]}}" />
-  <text style="display: inline-block;" class="text-22">准时：</text><l-rate style="display: inline-block;"  disabled size="88" score="{{option.series[0].data[1].value[1]}}" />
-  <text style="display: inline-block;" class="text-22">着装：</text><l-rate style="display: inline-block;"  disabled size="88" score="{{option.series[0].data[1].value[2]}}" />
-  <text style="display: inline-block;" class="text-22">服务：</text><l-rate style="display: inline-block;"  disabled size="88" score="{{option.series[0].data[1].value[3]}}" />
-  <text style="display: inline-block;" class="text-22">礼貌：</text><l-rate style="display: inline-block;"  disabled size="88" score="{{option.series[0].data[1].value[4]}}"  />
+  <text style="display: inline-block;" class="text-22">态度：</text><l-rate style="display: inline-block;"  disabled size="88" score="{{numFilters.toFix2(option.series[0].data[1].value[0])}}" />
+  <text style="display: inline-block;" class="text-22">准时：</text><l-rate style="display: inline-block;"  disabled size="88" score="{{numFilters.toFix2(option.series[0].data[1].value[1])}}" />
+  <text style="display: inline-block;" class="text-22">着装：</text><l-rate style="display: inline-block;"  disabled size="88" score="{{numFilters.toFix2(option.series[0].data[1].value[2])}}" />
+  <text style="display: inline-block;" class="text-22">服务：</text><l-rate style="display: inline-block;"  disabled size="88" score="{{numFilters.toFix2(option.series[0].data[1].value[3])}}" />
+  <text style="display: inline-block;" class="text-22">礼貌：</text><l-rate style="display: inline-block;"  disabled size="88" score="{{numFilters.toFix2(option.series[0].data[1].value[4])}}"  />
 </view>
 <ui-divider title="底下空空如也" bold/>
 </ui-sys>

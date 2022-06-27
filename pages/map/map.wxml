@@ -1,7 +1,7 @@
 <!--pages/map/map.wxml-->
 <ui-sys bg="ui-BG" footer="{{false}}" >
-  <ui-notify  data-userid="{{userid}}" msg="{{msg}}" duration="{{duration}}" bind:msgTap="clickMessage" show="{{show}}"/>
-  <map bindcallouttap="calloutClick"  class="w-100" style="height: 1400rpx;" markers="{{markerss}}" setting="{{setting}}" wx:if="{{ifshow}}" show-location="{{true}}">
+  <ui-notify  data-userid="{{userid}}" msg="{{msg}}" duration="{{duration}}" bind:msgTap="clickMessage" bind:close="messageClose" show="{{show}}"/>
+  <map bindregionchange="regionChange" bindcallouttap="calloutClick"  class="w-100" style="height: 1400rpx;" markers="{{markerss}}"  polygons="{{polylines}}" setting="{{setting}}" wx:if="{{ifshow}}" show-location="{{true}}">
   <cover-view bindtap="refreshMap" style="z-index: 22;font-size: 34rpx;margin-left: 20rpx;margin-top: 20rpx;background-color: rgb(48, 48, 48);opacity: 0.75;display: inline-block;color: whitesmoke;border-radius: 10rpx;height: 50rpx;line-height: 50rpx;cursor: pointer;padding: 10rpx;">
     刷新
   </cover-view>

@@ -112,9 +112,13 @@
   },
   "plugins": {
     "echarts": {
-      "version": "1.0.7",
+      "version": "2.1.0",
       "provider": "wx1db9e5ab1149ea03"
-    }
+    },
+    "routePlan": {
+      "version": "1.0.18",
+      "provider": "wx50b5593e81dd937a"
+      }
   },
   "darkmode": true,
   "sitemapLocation": "sitemap.json"

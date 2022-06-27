@@ -77,6 +77,21 @@ Page({
       loginUser:globalData.loginUser
     });
   },
+  //路线规划
+  routePlan(e){
+    console.log(e);
+    let plugin = requirePlugin('routePlan');
+    let key = globalData.txMapKey;  //使用在腾讯位置服务申请的key
+    let referer = '农村帮帮帮小程序';   //调用插件的app的名称
+    let endPoint = JSON.stringify({  //终点
+    'name': e.currentTarget.dataset.address,
+    'latitude': parseFloat(e.currentTarget.dataset.latitude),
+    'longitude':parseFloat(e.currentTarget.dataset.longitude)
+     });
+    wx.navigateTo({
+        url: 'plugin://routePlan/index?key=' + key + '&referer=' + referer + '&endPoint=' + endPoint
+    });
+  },
   //升序降序
   todescOrAsc(){
     if(this.data.descOrAsc=="desc"){
@@ -289,7 +304,7 @@ Page({
                 url: 'https://restapi.amap.com/v3/geocode/regeo', 
                 type:"get",
                 data:{
-                  key:"07d47b8c7f9bec5d1ec5eda4ac3e73f5",
+                  key:globalData.gaodeKey,
                   location: locations,
                   batch:true
                 },
@@ -312,7 +327,7 @@ Page({
                       tablePage:data.data.pageUtil,
                       isChooseLocation:false
                     });
-                    // console.log("发送请求得到的数据",that.data);
+                    // console.log("发送请求得到的数据",that.data.tableDatas);
                   if(that.data.isRefresh){
                     setTimeout(function () {
                       wx.showToast({
@@ -737,6 +752,12 @@ Page({
     let userid = Number(e.target.dataset.userid);
       app.clickMessage(userid);
   },
+  messageClose(e){
+    console.log(123);
+    this.setData({
+      show:false,
+    });
+  },
   onLoad() {
     wx.showLoading({
       title: this.data.isRefresh?'刷新中':'加载中',
@@ -745,16 +766,7 @@ Page({
     globalData=app.globalData;
     // console.log("onreadyready的globalData",globalData);
     // console.log("onshow",this.data);
-    let that =this;
-    app.globalData.messageCallback=(userid,name)=>{
-      console.log(that.data);
-      that.setData({
-        userid:userid,
-        show:true,
-        msg:"您有来自  "+name+"  的消息！",
-        duration:4000 
-      });
-    };
+   
     this.setLocationData();
     this.setLoginUserData();
      //获取用户位置
@@ -781,6 +793,18 @@ Page({
     // console.log("onshow",this.data);
     this.setLocationData();
     this.setLoginUserData();
+    let that =this;
+    if(that.data.loginUser!=null){
+    app.globalData.messageCallback=(userid,name)=>{
+      console.log(that.data);
+      that.setData({
+        userid:userid,
+        show:true,
+        msg:"您有来自  "+name+"  的消息！",
+        duration:2000 
+      });
+    };
+  }
     // this.refreshDataHandle();
     // if(this.data.locationAdcode!=""&&!this.data.isChooseLocation){
     //   this.refreshDataHandle();//重新刷新数据置空操作

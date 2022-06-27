@@ -1,7 +1,7 @@
 <!--pages/user-detail/user-detail.wxml-->
 <!--pages/me-detail/me-detail.wxml-->
 <ui-sys bg="ui-BG" footer="{{false}}" >
-  <ui-notify  data-userid="{{userid}}" msg="{{msg}}" duration="{{duration}}" bind:msgTap="clickMessage" show="{{show}}"/>
+  <ui-notify  data-userid="{{userid}}" msg="{{msg}}" duration="{{duration}}" bind:msgTap="clickMessage" bind:close="messageClose" show="{{show}}"/>
       <view class="p-6 text-center">
         <ui-avatar  src="{{user&&user.headimg!=''?serverPath+user.headimg:''}}"  ui="round sl  bg-{{user.sex=='男'?'blue':'pink'}}">
                   <text>{{user.name}}</text>
@@ -38,7 +38,7 @@
             </ui-form-group>
         </ui-form>
         <chart wx:if="{{user.role==1}}"  chart-class="chart w-100 h-100  p-1 shadow shadow-lg " option="{{ option }}" bindinstance="onInstance" />
-     
+        <button wx:if="{{loginUser}}" class="bg-blue m-3"  bindtap="communication">和{{user.sex=='男'?'他':'她'}}沟通</button>
          
          
 </ui-sys>

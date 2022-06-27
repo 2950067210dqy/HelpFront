@@ -94,6 +94,11 @@ Page({
       loginUser:globalData.loginUser
     });
   },
+    //聊天
+communication(e){
+  let that =this;
+   app.navTo("/pages/chat/chat?userid="+that.data.userid);
+},
   getUser(){
     let that =this;
     wx.cloud.callContainer({
@@ -152,6 +157,11 @@ Page({
     let userid = Number(e.target.dataset.userid);
       app.clickMessage(userid);
   },
+  messageClose(e){
+    this.setData({
+      show:false,
+    });
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -164,7 +174,7 @@ Page({
           userid:userid,
           show:true,
           msg:"您有来自  "+name+"  的消息！",
-          duration:4000 
+          duration:2000 
         });
       };
       this.getUser();

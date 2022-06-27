@@ -161,20 +161,16 @@ Page({
     let userid = Number(e.target.dataset.userid);
       app.clickMessage(userid);
   },
+  messageClose(e){
+    this.setData({
+      show:false,
+    });
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    let that = this;
-    app.globalData.messageCallback=(userid,name)=>{
-      console.log(that.data);
-      that.setData({
-        userid:userid,
-        show:true,
-        msg:"您有来自  "+name+"  的消息！",
-        duration:4000 
-      });
-    };
+   
   },
 
   /**
@@ -192,6 +188,16 @@ Page({
     globalData=app.globalData;
     this.setLoginUserData();
     if(globalData.loginUser!=null){
+      let that =this;
+      app.globalData.messageCallback=(userid,name)=>{
+        console.log(that.data);
+        that.setData({
+          userid:userid,
+          show:true,
+          msg:"您有来自  "+name+"  的消息！",
+          duration:2000 
+        });
+      };
       this.getMyIssueEachNum();
       if(globalData.loginUser.role==1){
         this.getMyHelpEachNum();

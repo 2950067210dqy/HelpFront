@@ -1,6 +1,7 @@
 <!--pages/rate-rank/rate-rank.wxml-->
+<wxs module="numFilters" src="../../utils/numtool.wxs"></wxs>
 <ui-sys footer="{{false}}" bg="">
-  <ui-notify  data-userid="{{userid}}" msg="{{msg}}" duration="{{duration}}" bind:msgTap="clickMessage"  show="{{show}}"/>
+  <ui-notify  data-userid="{{userid}}" msg="{{msg}}" duration="{{duration}}" bind:msgTap="clickMessage" bind:close="messageClose"  show="{{show}}"/>
   <ui-title class="w-100" titleUi="" title="评分排行榜"  desc="RateRank" hasDot/>
   <view class="p-2" wx:for="{{rates}}" wx:for-index="index">
     <ui-card ui="shadow m-3 radius  {{index==0?'borders border-yellow shadow-yellow':''}}   {{index==1?'borders border-orange shadow-orange ':''}} {{index==2?'borders border-brown shadow-brown ':''}}"    img="{{serverPath+rates[index].user.headimg}}" imgHeight="80rpx" >
@@ -20,13 +21,14 @@
             </view>
            
             <view class="text-14 mr-5" >
-              <view class="mt-2 text-18 text-red">综合：{{(rates[index].rateByHelper.mannerrate/rates[index].rateByHelper.humannum+rates[index].rateByHelper.ontimerate/rates[index].rateByHelper.humannum+rates[index].rateByHelper.clotherate/rates[index].rateByHelper.humannum+rates[index].rateByHelper.serverate/rates[index].rateByHelper.humannum+rates[index].rateByHelper.politerate/rates[index].rateByHelper.humannum)/5}}  分  </view>
+              <view class="mt-2 text-18 text-red">综合：{{numFilters.toFix2((rates[index].rateByHelper.mannerrate/rates[index].rateByHelper.humannum+rates[index].rateByHelper.ontimerate/rates[index].rateByHelper.humannum+rates[index].rateByHelper.clotherate/rates[index].rateByHelper.humannum+rates[index].rateByHelper.serverate/rates[index].rateByHelper.humannum+rates[index].rateByHelper.politerate/rates[index].rateByHelper.humannum)/5)}}  分  </view>
               <view class="mt-2 text-18 text-red">评价人数：{{rates[index].rateByHelper.humannum}}    </view>
-              <view class="mt-2">态度：{{rates[index].rateByHelper.mannerrate/rates[index].rateByHelper.humannum}}  分  </view>
-              <view class="mt-2">准时：{{rates[index].rateByHelper.ontimerate/rates[index].rateByHelper.humannum}}  分  </view>
-              <view class="mt-2">着装：{{rates[index].rateByHelper.clotherate/rates[index].rateByHelper.humannum}}  分  </view>
-              <view class="mt-2">服务：{{rates[index].rateByHelper.serverate/rates[index].rateByHelper.humannum}}  分  </view>
-              <view class="mt-2">礼貌：{{rates[index].rateByHelper.politerate/rates[index].rateByHelper.humannum}}  分  </view>
+            
+              <view class="mt-2">态度：  <l-rate style="display: inline-block;"  disabled size="26" score="{{numFilters.toFix2(rates[index].rateByHelper.mannerrate/rates[index].rateByHelper.humannum)}}"/></view>
+              <view class="mt-2">准时：  <l-rate style="display: inline-block;"  disabled size="26" score="{{numFilters.toFix2(rates[index].rateByHelper.ontimerate/rates[index].rateByHelper.humannum)}}"/></view>
+              <view class="mt-2">着装：  <l-rate style="display: inline-block;"  disabled size="26" score="{{numFilters.toFix2(rates[index].rateByHelper.clotherate/rates[index].rateByHelper.humannum)}}"/></view>
+              <view class="mt-2">服务：  <l-rate style="display: inline-block;"  disabled size="26" score="{{numFilters.toFix2(rates[index].rateByHelper.serverate/rates[index].rateByHelper.humannum)}}"/></view>
+              <view class="mt-2">礼貌：  <l-rate style="display: inline-block;"  disabled size="26" score="{{numFilters.toFix2(rates[index].rateByHelper.politerate/rates[index].rateByHelper.humannum)}}"/></view>
             </view>
            
         </view>

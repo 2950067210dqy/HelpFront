@@ -157,7 +157,7 @@ Page({
                 url: 'https://restapi.amap.com/v3/geocode/regeo', 
                 type:"get",
                 data:{
-                  key:"07d47b8c7f9bec5d1ec5eda4ac3e73f5",
+                  key:globalData.gaodeKey,
                   location: locations,
                   batch:true
                 },
@@ -583,6 +583,12 @@ communication(e){
     let userid = Number(e.target.dataset.userid);
       app.clickMessage(userid);
   },
+  messageClose(e){
+    console.log(123);
+    this.setData({
+      show:false,
+    });
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -599,7 +605,7 @@ communication(e){
         userid:userid,
         show:true,
         msg:"您有来自  "+name+"  的消息！",
-        duration:4000 
+        duration:2000
       });
     };
 
