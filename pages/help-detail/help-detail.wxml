@@ -8,7 +8,7 @@
               <!-- <view slot="num" class="text-gray">#{{1}}</view> -->
               <view slot="image" class="inline-block" >
                 <ui-avatar src="{{tableData.user&&tableData.user.headimg!=''?serverPath+tableData.user.headimg:''}}" data-userid="{{tableData.user.id}}" catchtap="navToUserDetail" ui="round xl  bg-{{tableData.user.sex=='男'?'blue':'pink'}}">
-                  <text>{{tableData.user.name}}</text>
+                  <text class="text-10">{{tableData.user.name}}</text>
                   <ui-tag badge="bl" ui="shadow-yellow borders  borders-yellow" bg="bg-white" isSlot class="opacity">
                       <text class="cicon-{{tableData.user.sex=='男'?'':'fe'}}male text-{{tableData.user.sex=='男'?'blue':'pink'}}"/>
                       <text class="text-yellow text-bolder  shadow-white " >{{tableData.user.role==1?'志愿者':''}}</text>
@@ -48,7 +48,7 @@
               </view>
               <view class="bg-grey text-center  p-4" wx:elif="{{(tableData.helpUser!=null&&tableData.state.id==2)}}">
                 <ui-avatar  src="{{tableData.helpUser&&tableData.helpUser.headimg!=''?serverPath+tableData.helpUser.headimg:''}}" bindtap="navToUserDetail" data-userid="{{tableData.helpUser.id}}" ui="round df  bg-{{tableData.helpUser.sex=='男'?'blue':'pink'}}">
-                  <text>{{tableData.helpUser.name}}</text>
+                  <text class="text-10">{{tableData.helpUser.name}}</text>
                   <ui-tag badge="bl" ui="" bg="bg-grey" isSlot class="opacity ">
                       <text class="text-bold  cicon-{{tableData.helpUser.sex=='男'?'':'fe'}}male text-{{tableData.helpUser.sex=='男'?'blue':'pink'}}"/>
                      

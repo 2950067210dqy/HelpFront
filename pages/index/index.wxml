@@ -3,7 +3,7 @@
   <ui-search-bar isLeft  isRight barUi="mt-2" ui="radius" bind:confirm="searchHelp"  bind:input="getSearchText" bind:blur="searchHelp" bind:empty="searchHelp">
     <block wx:if="{{loginUser!=null}}">
       <ui-avatar slot="right" src="{{loginUser&&loginUser.headimg!=''?serverPath+loginUser.headimg:''}}"   bindtap="switchToMe" ui="round  bg-{{loginUser.sex=='男'?'blue':'pink'}}">
-                  <text>{{loginUser.name}}</text>
+                  <text class="text-10">{{loginUser.name}}</text>
                   <ui-tag badge="bl" ui="shadow-yellow borders  borders-yellow" bg="bg-white" isSlot class="opacity">
                       <text class="cicon-{{loginUser.sex=='男'?'':'fe'}}male text-{{loginUser.sex=='男'?'blue':'pink'}}"/>
                       <text class="text-yellow text-bolder  shadow-white" >{{loginUser.role==1?'志愿者':''}}</text>
@@ -68,7 +68,7 @@
               <view slot="num" class="text-gray">#{{index+1}}</view>
               <view slot="image" class="inline-block" >
                 <ui-avatar src="{{tableDatas[index].user&&tableDatas[index].user.headimg!=''?serverPath+tableDatas[index].user.headimg:''}}" data-userid="{{tableDatas[index].user.id}}" catchtap="navToUserDetail" ui="round xl  bg-{{tableDatas[index].user.sex=='男'?'blue':'pink'}}">
-                  <text>{{tableDatas[index].user.name}}</text>
+                  <text class="text-10">{{tableDatas[index].user.name}}</text>
                   <ui-tag badge="bl" ui="shadow-yellow borders  borders-yellow" bg="bg-white" isSlot class="opacity">
                       <text class="cicon-{{tableDatas[index].user.sex=='男'?'':'fe'}}male text-{{tableDatas[index].user.sex=='男'?'blue':'pink'}}"/>
                       <text class="text-yellow text-bolder  shadow-white" >{{tableDatas[index].user.role==1?'志愿者':''}}</text>
@@ -108,7 +108,7 @@
               </view>
               <view class="bg-grey text-center  p-3" wx:elif="{{(tableDatas[index].helpUser!=null&&tableDatas[index].state.id==2)}}">
                 <ui-avatar  src="{{tableDatas[index].helpUser&&tableDatas[index].helpUser.headimg!=''?serverPath+tableDatas[index].helpUser.headimg:''}}" bindtap="navToUserDetail" data-userid="{{tableDatas[index].helpUser.id}}" ui="round df  bg-{{tableDatas[index].helpUser.sex=='男'?'blue':'pink'}}">
-                  <text>{{tableDatas[index].helpUser.name}}</text>
+                  <text class="text-10">{{tableDatas[index].helpUser.name}}</text>
                   <ui-tag badge="bl" ui="" bg="bg-grey" isSlot class="opacity ">
                       <text class="text-bold  cicon-{{tableDatas[index].helpUser.sex=='男'?'':'fe'}}male text-{{tableDatas[index].helpUser.sex=='男'?'blue':'pink'}}"/>
                      

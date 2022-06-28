@@ -19,7 +19,7 @@
                                     <view slot="num" class="text-gray">#{{index+1}}</view>
                                     <view slot="image" class="inline-block" >
                                       <ui-avatar src="{{tableDatas[index0].datas[index].user&&tableDatas[index0].datas[index].user.headimg!=''?serverPath+tableDatas[index0].datas[index].user.headimg:''}}" bindtap="navToUserDetail" data-userid="{{tableDatas[index0].datas[index].user.id}}" ui="round xl  bg-{{tableDatas[index0].datas[index].user.sex=='男'?'blue':'pink'}}">
-                                        <text>{{tableDatas[index0].datas[index].user.name}}</text>
+                                        <text class="text-10">{{tableDatas[index0].datas[index].user.name}}</text>
                                         <ui-tag badge="bl" ui="shadow-yellow borders  borders-yellow" bg="bg-white" isSlot class="opacity">
                                             <text class="cicon-{{tableDatas[index0].datas[index].user.sex=='男'?'':'fe'}}male text-{{tableDatas[index0].datas[index].user.sex=='男'?'blue':'pink'}}"/>
                                             <text class="text-yellow text-bolder  shadow-white" >{{tableDatas[index0].datas[index].user.role==1?'志愿者':''}}</text>
@@ -57,7 +57,7 @@
 
                                     <view class="bg-grey text-center  p-3" wx:elif="{{tableDatas[index0].datas[index].helpUser!=null&&tableDatas[index0].datas[index].state.id==2}}">
                                       <ui-avatar  src="{{tableDatas[index0].datas[index].helpUser&&tableDatas[index0].datas[index].helpUser.headimg!=''?serverPath+tableDatas[index0].datas[index].helpUser.headimg:''}}" data-userid="{{tableDatas[index0].datas[index].helpUser.id}}" bindtap="navToUserDetail" ui="round df  bg-{{tableDatas[index0].datas[index].helpUser.sex=='男'?'blue':'pink'}}">
-                                        <text>{{tableDatas[index0].datas[index].helpUser.name}}</text>
+                                        <text class="text-10">{{tableDatas[index0].datas[index].helpUser.name}}</text>
                                         <ui-tag badge="bl" ui="" bg="bg-grey" isSlot class="opacity ">
                                             <text class="text-bold  cicon-{{tableDatas[index0].datas[index].helpUser.sex=='男'?'':'fe'}}male text-{{tableDatas[index0].datas[index].helpUserr.sex=='男'?'blue':'pink'}}"/>
                       
@@ -69,7 +69,7 @@
 
                                     <view class="bg-grey text-center  p-3" wx:elif="{{loginUser!=null&&tableDatas[index0].datas[index].state.id==3&&tableDatas[index0].datas[index].helpUser!=null}}">
                                       <ui-avatar  src="{{tableDatas[index0].datas[index].helpUser&&tableDatas[index0].datas[index].helpUser.headimg!=''?serverPath+tableDatas[index0].datas[index].helpUser.headimg:''}}" data-userid="{{tableDatas[index0].datas[index].helpUser.id}}" bindtap="navToUserDetail" ui="round df  bg-{{tableDatas[index0].datas[index].helpUser.sex=='男'?'blue':'pink'}}">
-                                        <text>{{tableDatas[index0].datas[index].helpUser.name}}</text>
+                                        <text class="text-10">{{tableDatas[index0].datas[index].helpUser.name}}</text>
                                         <ui-tag badge="bl" ui="" bg="bg-grey" isSlot class="opacity ">
                                             <text class="text-bold  cicon-{{tableDatas[index0].datas[index].helpUser.sex=='男'?'':'fe'}}male text-{{tableDatas[index0].datas[index].helpUserr.sex=='男'?'blue':'pink'}}"/>
                                         </ui-tag>

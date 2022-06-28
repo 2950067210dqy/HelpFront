@@ -4,7 +4,7 @@
   <ui-notify  data-userid="{{userid}}" msg="{{msg}}" duration="{{duration}}" bind:msgTap="clickMessage" bind:close="messageClose" show="{{show}}"/>
       <view class="p-6 text-center">
         <ui-avatar  src="{{user&&user.headimg!=''?serverPath+user.headimg:''}}"  ui="round sl  bg-{{user.sex=='男'?'blue':'pink'}}">
-                  <text>{{user.name}}</text>
+                  <text class="text-10">{{user.name}}</text>
                   <ui-tag badge="bl" ui="shadow-yellow borders  borders-yellow" bg="bg-white" isSlot class="opacity">
                       <text class="cicon-{{user.sex=='男'?'':'fe'}}male text-{{user.sex=='男'?'blue':'pink'}}"/>
                       <text class="text-yellow text-bolder  shadow-white" >{{user.role==1?'志愿者':''}}</text>

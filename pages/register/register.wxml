@@ -43,7 +43,7 @@
             
             <ui-form-group title="头像：" contentui="justify-end" ui="text-gray ml-2 " icon="cicon-pic text-grey">
               <ui-avatar src="{{serverPath}}{{user.headimg}}" bindtap="uploadHeadImg" ui="round xl bg-{{sexColor}}">
-                  <text>{{user.name}}</text>
+                  <text >{{user.name}}</text>
                   <ui-tag badge="bl" bg="shadow bg-white" isSlot>
                       <text class="cicon-{{sexIcon}}male text-{{sexColor}}"/>
                   </ui-tag>

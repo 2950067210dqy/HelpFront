@@ -5,7 +5,7 @@
       <block wx:if="{{loginUser!=null}}">
         <view class="flex-bar my-4"  bindtap="navToMeDetail">
           <ui-avatar slot="right" src="{{loginUser&&loginUser.headimg!=''?serverPath+loginUser.headimg:''}}"  bindtap="navToMeDetail" ui="round sl  bg-{{loginUser.sex=='男'?'blue':'pink'}}">
-                  <text>{{loginUser.name}}</text>
+                  <text class="text-10">{{loginUser.name}}</text>
                   <ui-tag badge="bl" ui="shadow-yellow borders  borders-yellow" bg="bg-white" isSlot class="opacity">
                       <text class="cicon-{{loginUser.sex=='男'?'':'fe'}}male text-{{loginUser.sex=='男'?'blue':'pink'}}"/>
                       <text class="text-yellow text-bolder  shadow-white" >{{loginUser.role==1?'志愿者':''}}</text>
