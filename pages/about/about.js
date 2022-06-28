@@ -31,16 +31,7 @@ Page({
     app =getApp();
     globalData=app.globalData;
     this.setLoginUserData();
-    let that =this;
-    app.globalData.messageCallback=(userid,name)=>{
-      console.log(that.data);
-      that.setData({
-        userid:userid,
-        show:true,
-        msg:"您有来自  "+name+"  的消息！",
-        duration:2000 
-      });
-    };
+    
   },
 
   /**
@@ -57,6 +48,16 @@ Page({
     app =getApp();
     globalData=app.globalData;
     this.setLoginUserData();
+    let that =this;
+    app.globalData.messageCallback=(userid,name)=>{
+      console.log(that.data);
+      that.setData({
+        userid:userid,
+        show:true,
+        msg:"您有来自  "+name+"  的消息！",
+        duration:2000 
+      });
+    };
   },
 
   /**

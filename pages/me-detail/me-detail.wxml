@@ -14,7 +14,7 @@
       </view>
 
       <ui-form ui="ui-BG mt-4">
-            <ui-form-group disabled required icon="cicon-avatar-o text-gray">
+            <!-- <ui-form-group disabled required icon="cicon-avatar-o text-gray">
                 <ui-input-box>
                     <input  maxlength="12" class="ui-input-wrapper" bindinput="updateUsername"  auto-focus value="{{user.username}}" placeholder="用户名(最大12位)"/>
                 </ui-input-box>
@@ -24,10 +24,10 @@
                     <input maxlength="12" class="ui-input-wrapper" bindinput="updatePassword" type="password" value="{{user.password}}" placeholder="密码(最大12位)"/>
                 </ui-input-box>
             </ui-form-group>
-           
+            -->
             <ui-form-group disabled="{{isLoading}}"  required icon="cicon-avatar text-gray">
                 <ui-input-box>
-                    <input maxlength="5" bindinput="updateName" class="ui-input-wrapper" value="{{user.name}}" placeholder="姓名（最大5位）"/>
+                    <input  bindinput="updateName" class="ui-input-wrapper" value="{{user.name}}" placeholder="姓名"/>
                 </ui-input-box>
             </ui-form-group>
 

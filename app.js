@@ -243,7 +243,7 @@ App({
   //查看用户协议 start
   checkUserSettle(page){
     let that=this;
-    page.showDialog(page,'沁柚网用户协定','本小程序还在开发阶段，很有可能结束开发，作者：'+that.globalData.authorSchool+that.globalData.authorClass+that.globalData.authorName);
+    that.showDialog(page,'沁柚网用户协定','本小程序还在开发阶段，很有可能结束开发，作者：'+that.globalData.authorSchool+that.globalData.authorClass+that.globalData.authorName);
   
   },   //查看用户协议 end
   //随机数start
@@ -343,6 +343,7 @@ App({
     let that =this;
     // if(that.globalData.socketOpen){
       that.globalData.socket.onError(function(res){
+        console.log("WebSocket发生错误");
         if (that.globalData.heart_jump) {
           that.close_heart();
           that.globalData.heart_jump = false;

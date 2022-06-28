@@ -4,6 +4,7 @@
 
     "pages/index/index",
     "pages/chat/chat",
+    "pages/help-detail/help-detail",
     "pages/rate/rate",
     "pages/rate-rank/rate-rank",
     "pages/score/score",

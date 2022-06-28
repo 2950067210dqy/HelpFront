@@ -1,0 +1,83 @@
+<!--pages/help-detail/help-detail.wxml-->
+<!--pages/about/about.wxml-->
+<ui-sys footer="{{false}}" bg="">
+  <ui-notify  data-userid="{{userid}}" msg="{{msg}}" duration="{{duration}}" bind:msgTap="clickMessage" bind:close="messageClose" show="{{show}}"/>
+  <view class="p-3">
+    <ui-title class="w-100" titleUi="" title="求助信息"  desc="helpInfo" hasDot/>
+    <i-card   full i-class="radius {{tableData.state.id==2?'border':''}} "    title="{{tableData.title}}" t  thumb="{{serverPath+tableData.user.headimg}}">
+              <!-- <view slot="num" class="text-gray">#{{1}}</view> -->
+              <view slot="image" class="inline-block" >
+                <ui-avatar src="{{tableData.user&&tableData.user.headimg!=''?serverPath+tableData.user.headimg:''}}" data-userid="{{tableData.user.id}}" catchtap="navToUserDetail" ui="round xl  bg-{{tableData.user.sex=='男'?'blue':'pink'}}">
+                  <text>{{tableData.user.name}}</text>
+                  <ui-tag badge="bl" ui="shadow-yellow borders  borders-yellow" bg="bg-white" isSlot class="opacity">
+                      <text class="cicon-{{tableData.user.sex=='男'?'':'fe'}}male text-{{tableData.user.sex=='男'?'blue':'pink'}}"/>
+                      <text class="text-yellow text-bolder  shadow-white " >{{tableData.user.role==1?'志愿者':''}}</text>
+                  </ui-tag>
+                </ui-avatar>
+              </view>
+              <view slot="top-info" class="inline-block ml-3 ">
+                <text data-userid="{{tableData.user.id}}" bindtap="navToUserDetail" class="text-16"  style=" white-space:pre-wrap">{{tableData.user.name}}</text>
+                <text class="text-10 text-red" wx:if="{{loginUser!=null&&loginUser.id==tableData.user.id}}">
+                    [自己]
+                </text> 
+                <text class="text-10 text-red" wx:elif="{{loginUser!=null&&loginUser.id==tableData.user.id&&tableData.helpUser!=null&&loginUser.id==tableData.helpUser.id}}">
+                    [自己][帮助过]
+                </text> 
+                <text class="text-10 text-red" wx:elif="{{loginUser!=null&&loginUser.id!=tableData.user.id&&tableData.helpUser!=null&&loginUser.id==tableData.helpUser.id}}">
+                    [帮助过]
+                </text> 
+              </view>
+              <view slot="extra" >
+                <text class="mr-3 text-14"> 🔒{{tableData.emergency.message}}</text>
+              </view>
+              <view slot="content">
+                <view style=" white-space:pre-wrap" class="text-22 my-3">{{tableData.message}}</view>
+                <block wx:if="{{tableData.images!=''}}" wx:for="{{tableData.images}}" wx:for-index="index2">
+                <image class="m-1 radius" data-id-child="{{index2}}" data-id-father="{{index}}" data-type="father" src="{{serverPath+tableData.images[index2]}}" bindtap="magnifyImage" style="width: 180rpx;height: 180rpx;position: relative; padding-right: 20rpx;"> 
+                </image>
+              </block>
+              <view class="my-3">
+                <text class="cicon-mobile-o text-black text-16"  style=" white-space:pre-wrap">:{{loginUser!=null&&loginUser.role==1?tableData.user.phone:'***********'}}</text>
+              </view>
+              <view class="my-4" data-latitude="{{tableData.latitude}}" data-longitude="{{tableData.longitude}}" data-address="{{tableData.address+tableData.detailLocation}}" catchtap="routePlan">
+                <text class="cicon-location-on text-black text-16"  style=" white-space:pre-wrap">:{{tableData.address}}{{loginUser!=null&&loginUser.role==1?tableData.detailLocation:'***********'}}</text>
+              </view>
+              <view 
+              wx:if="{{(loginUser!=null&&loginUser.role==1)&&(tableData.helpUser==null&&tableData.state.id==1)}}">
+                <button class="bg-{{tableData.state.id==2?'orange':'pink'}}" disabled="{{tableData.state.id==2}}" data-userid="{{tableData.user.id}}"  data-id="{{tableData.id}}" data-index="{{index}}" bindtap="helpThis">{{tableData.helpUser!=null?'正在被':''}}帮助</button>
+              </view>
+              <view class="bg-grey text-center  p-4" wx:elif="{{(tableData.helpUser!=null&&tableData.state.id==2)}}">
+                <ui-avatar  src="{{tableData.helpUser&&tableData.helpUser.headimg!=''?serverPath+tableData.helpUser.headimg:''}}" bindtap="navToUserDetail" data-userid="{{tableData.helpUser.id}}" ui="round df  bg-{{tableData.helpUser.sex=='男'?'blue':'pink'}}">
+                  <text>{{tableData.helpUser.name}}</text>
+                  <ui-tag badge="bl" ui="" bg="bg-grey" isSlot class="opacity ">
+                      <text class="text-bold  cicon-{{tableData.helpUser.sex=='男'?'':'fe'}}male text-{{tableData.helpUser.sex=='男'?'blue':'pink'}}"/>
+                     
+                  </ui-tag>
+                </ui-avatar>
+                <text class="text-16">  {{tableData.helpUser.name}}       志愿者已经接取发布，正在马不停蹄的完成中....</text>
+              </view>
+
+              <view wx:elif="{{tableData.state.id==3}}" class="mt-3">
+                                      <button class="bg-orange-light" disabled="true" data-userid="{{tableData.user.id}}"  data-id="{{tableData.id}}" data-index="{{index}}" >已完成</button>
+              </view>
+
+              <view wx:elif="{{tableData.state.id==4}}" class="mt-3">
+                                      <button class="bg-grey-light" disabled="true" data-userid="{{tableData.user.id}}"  data-id="{{tableData.id}}" data-index="{{index}}" >已取消</button>
+              </view>
+
+
+
+              </view>
+              <view slot="footer" class="_icon-waiting-o text-gray">
+                <text class="text-14 text-bold">{{tableData.updatetime}}</text>
+                <text  class="ext-12 text-bold ml-1 text-14 text-{{tableData.state.id==2?'orange':''}}"> 🪵[{{tableData.state.message}}]</text>
+                <text class="text-14 text-bold  "> 🔔[{{tableData.type.message}}]</text>
+              </view>
+    </i-card>
+    <ui-title class="w-100" titleUi="" title="留言"  desc="comment" hasDot/>
+    <view>
+      暂无留言
+    </view>
+  </view>
+  <ui-divider title="底下空空如也" bold/>
+  </ui-sys>

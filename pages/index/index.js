@@ -48,6 +48,11 @@ Page({
   navToUserDetail(e){
     app.navToUserDetail(e);
   },
+  navToHelpDetail(e){
+    wx.navigateTo({
+      url: '/pages/help-detail/help-detail?id='+e.currentTarget.dataset.id+"&adcode="+e.currentTarget.dataset.adcode+"&address="+e.currentTarget.dataset.address+"&detailLocation="+e.currentTarget.dataset.detaillocation,
+    })
+  },
   //跳转登录
   navToLogin(){
     globalData.loginBackRoute="/pages/index/index";

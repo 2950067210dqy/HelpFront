@@ -64,15 +64,31 @@
                 <text class="cicon-round-angle-o ml-3"/>
             </view>
         </view>
-        <!-- <ui-fixed bottom>
+        <ui-fixed bottom>
             <view class="p-5">
                 <ui-title title="其他登录方式" align="center" hasLine tpl="center-column"/>
                 <button class="ui-btn bg-green-gradient radius lg block shadow-green" bindtap="wxloginSubmit" disabled="{{isLoading}}">
                     <text class="cicon-weixin icon-xl mr-3"/>
                     <text>微信一键登录</text>
-                    <text class="cicon-loading1 icon-spin ml-3" wx:if="{{wxisLoading}}"/>
+                    <text class="cicon-loading1 icon-spin ml-3" wx:if="{{isLoading}}"/>
                 </button>
             </view>
-        </ui-fixed> -->
+        </ui-fixed>
     </view>
+
+    <ui-modal  noNav show="{{isRegister}}" cancelText="取消" confirmText="确认" cancel="" confrimtransparent mask="40" bind:success='setVolument'>
+            <ui-form>
+            <ui-form-group required icon="cicon-android text-gray" ui="text-dark-5 "  isAction>
+                      <ui-input-box>
+                        成为志愿者<ui-switch checked="{{isVolun}}" bind:change="updateRole" ui="ml-3" />
+                      </ui-input-box>
+                      
+                  </ui-form-group>
+                  <ui-form-group wx:if="{{isVolun}}"  required icon="cicon-chat text-gray" ui="text-dark-5 " titleTop  isAction> 
+                    <ui-input-box isType="textarea"  showTag>
+                        <textarea class="ui-textarea-wrapper" bindinput="updateMessage" value="{{message}}" placeholder="请输入为啥成为志愿者" maxlength="500" />
+                    </ui-input-box> 
+                  </ui-form-group>
+              </ui-form>
+     </ui-modal>
 </ui-sys>
