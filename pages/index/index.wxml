@@ -1,6 +1,6 @@
 <ui-sys footer="{{false}}" >
   <ui-notify  data-userid="{{userid}}" msg="{{msg}}" duration="{{duration}}" bind:msgTap="clickMessage"  bind:close="messageClose" show="{{show}}"/>
-  <ui-search-bar isLeft  isRight barUi="mt-2" ui="radius" bind:confirm="searchHelp"  bind:input="getSearchText" bind:blur="searchHelp" bind:empty="searchHelp">
+  <ui-search-bar isLeft  isRight barUi="mt-2 " ui="radius" bind:confirm="searchHelp"  bind:input="getSearchText" bind:blur="searchHelp" bind:empty="searchHelp">
     <block wx:if="{{loginUser!=null}}">
       <ui-avatar slot="right" src="{{loginUser&&loginUser.headimg!=''?serverPath+loginUser.headimg:''}}"   bindtap="switchToMe" ui="round  bg-{{loginUser.sex=='男'?'blue':'pink'}}">
                   <text class="text-10">{{loginUser.name}}</text>
@@ -12,11 +12,11 @@
        </ui-avatar>
     </block>
     <block wx:else>
-      <ui-avatar slot="right" ui="round text-10 bg-dark-6" bindtap="navToLogin" >未登录</ui-avatar><!--头像-->
+      <ui-avatar slot="right" ui="round text-10  bg-green" bindtap="navToLogin" >未登录</ui-avatar><!--头像-->
     </block>
    
     <view slot="left">
-      <ui-tag ui="cicon-location-on text-dark-6 "  info="{{locationCity}}{{locationDistrict}}" bindtap="chooseLocation"/>
+      <ui-tag ui="cicon-location-on text-dark-6 bg-green"  info="{{locationCity}}{{locationDistrict}}" bindtap="chooseLocation"/>
     </view>
   </ui-search-bar>
 
@@ -24,37 +24,37 @@
   <ui-card ui="shadow m-3 radius"  imgHeight="auto" img="/static/dqy/banner.jpg">
     <view class="" slot="diy">
         <ui-title title="工具栏" desc="setting" hasDot/>
-        <view class="ml-1 mt-1 " style="display: flex;flex-direction: row;flex-wrap: wrap;justify-content:center; align-items:center;align-content:center"> 
+        <view class="ml-1 mt-1 " style="display: flex;flex-direction: row;flex-wrap:nowrap;justify-content:center; align-items:center;align-content:center"> 
                       <picker style="flex-grow: 1;"   mode="selector" range="{{stateItems}}" range-key="message" bindchange="selectorStateChange">
-                        <ui-tag ui="bg-dark-{{selectorState=='筛选状态'?5:3}}" info="{{selectorState}}"/>
+                        <ui-tag ui="bg-{{selectorState=='筛选状态'?'green':'green-gradient'}}" info="{{selectorState}}"/>
                       </picker>
                       <picker  style="flex-grow: 1;" mode="selector" range="{{emerItems}}" range-key="message" bindchange="selectorEmerChange">
-                        <ui-tag ui="bg-dark-{{selectorEmer=='筛选紧急'?5:3}}" info="{{selectorEmer}}"/>
+                        <ui-tag ui="bg-{{selectorEmer=='筛选紧急'?'green':'green-gradient'}}" info="{{selectorEmer}}"/>
                       </picker>
                       <picker style="flex-grow: 1;"  mode="selector" range="{{typeItems}}" range-key="message" bindchange="selectorTypeChange">
-                        <ui-tag ui="bg-dark-{{selectorType=='筛选类别'?5:3}}" info="{{selectorType}}"/>
+                        <ui-tag ui="bg-{{selectorType=='筛选类别'?'green':'green-gradient'}}" info="{{selectorType}}"/>
                       </picker>
-                      <ui-tag style="flex-grow: 1;" ui="bg-dark-5" bindtap="todescOrAsc" info="{{descOrAsc=='desc'?'升序':'降序'}}"/>
-                      <ui-tag style="flex-grow: 1;" ui="bg-dark-5" bindtap="toDefault" info="默认"/>
+                      <ui-tag style="flex-grow: 1;" ui="bg-green" bindtap="todescOrAsc" info="{{descOrAsc=='desc'?'升序':'降序'}}"/>
+                      <ui-tag style="flex-grow: 1;" ui="bg-green" bindtap="toDefault" info="默认"/>
         </view>
         <view class="mt-2" style="display: flex;flex-direction: row;flex-wrap:nowrap;justify-content:center; align-items:center;align-content:center"> 
                     <picker mode="date" bindchange="fromdateChange">
-                      <ui-tag ui="bg-dark-{{fromdate=='选择日期'?5:3}}" info="{{fromdate}}"/>
+                      <ui-tag ui="bg-{{fromdate=='选择日期'?'green':'green-gradient'}}" info="{{fromdate}}"/>
                     </picker>
                     <picker mode="time" bindchange="fromtimeChange">
-                      <ui-tag ui="bg-dark-{{fromtime=='选择时间'?5:3}}" info="{{fromtime}}"/>
+                      <ui-tag ui="bg-{{fromtime=='选择时间'?'green':'green-gradient'}}" info="{{fromtime}}"/>
                     </picker>
-                    <ui-tag ui="bg-dark-5 " info="—"/>
+                    <ui-tag ui="bg-green " info="—"/>
                     <picker mode="date" bindchange="todateChange">
-                      <ui-tag ui="bg-dark-{{todate=='选择日期'?5:3}}" info="{{todate}}"/>
+                      <ui-tag ui="bg-{{todate=='选择日期'?'green':'green-gradient'}}" info="{{todate}}"/>
                     </picker>
                     <picker mode="time" bindchange="totimeChange">
-                      <ui-tag ui="bg-dark-{{totime=='选择时间'?5:3}} block" info="{{totime}}"/>
+                      <ui-tag ui="bg-{{totime=='选择时间'?'green':'green-gradient'}} block" info="{{totime}}"/>
                     </picker> 
         </view>
         <view class="mt-2" style="display: flex;flex-direction: row;flex-wrap: wrap;justify-content:center; align-items:center;align-content:center"> 
-                    <button class="ui-btn  bg-dark-5" style="width: 48%;" bindtap="removeTime">清空时间</button>
-                    <button class="ui-btn  bg-dark-5" style="width: 48%;" bindtap="okTime">确定时间</button>
+                    <button class="ui-btn  bg-green" style="width: 48%;" bindtap="removeTime">清空时间</button>
+                    <button class="ui-btn  bg-green" style="width: 48%;" bindtap="okTime">确定时间</button>
         </view>
     </view>
    </ui-card>

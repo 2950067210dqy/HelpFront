@@ -29,7 +29,7 @@
     }
   },
   "tabBar": {
-    "color": "#8799A3",
+    "color": "#8dc63f",
     "selectedColor": "#E03997",
     "backgroundColor": "#ffffff",
     "borderStyle": "black",
@@ -38,25 +38,25 @@
     {
       "pagePath": "pages/index/index",
       "text": "首页",
-      "iconPath": "./static/tab_icon/document.png",
+      "iconPath": "./static/tab_icon/document_d.png",
       "selectedIconPath": "./static/tab_icon/document_cur.png"
     },
     {
       "pagePath": "pages/issue/issue",
       "text": "发布",
-      "iconPath": "./static/tab_icon/test.png",
+      "iconPath": "./static/tab_icon/test_d.png",
       "selectedIconPath": "./static/tab_icon/test_cur.png"
     },
     {
       "pagePath": "pages/map/map",
       "text": "地图",
-      "iconPath": "./static/tab_icon/custom.png",
+      "iconPath": "./static/tab_icon/custom_d.png",
       "selectedIconPath": "./static/tab_icon/custom_cur.png"
     },
     {
       "pagePath": "pages/me/me",
       "text": "我的",
-      "iconPath": "./static/tab_icon/my.png",
+      "iconPath": "./static/tab_icon/my_d.png",
       "selectedIconPath": "./static/tab_icon/my_cur.png"
     }
   ]

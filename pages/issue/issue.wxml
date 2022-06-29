@@ -33,7 +33,7 @@
             <ui-form-group disabled  required icon="cicon-avatar text-gray">
                 <ui-input-box>
                     <text class="mr-3">求助人姓名:</text>
-                    <input maxlength="5" bindinput="updateName" class="ui-input-wrapper" value="{{loginUser.name}}" placeholder="姓名（最大5位）"/>
+                    <input  bindinput="updateName" class="ui-input-wrapper" value="{{loginUser.name}}" placeholder="姓名（最大5位）"/>
                     <text>{{loginUser.sex=="男"?"先生":"女士"}}</text>
                 </ui-input-box>
             </ui-form-group>
